@@ -1,14 +1,8 @@
 syntax: glob
 
 *.pyc
-templates/.tmp_*
 _generated_media/*
 *.komodoproject
-sqlite_databases/*.db
-sqlite_databases/*.tgz
+*.sublime-*
+
 # Project specific
-config.py
-urls.py
-templates
-static
-home

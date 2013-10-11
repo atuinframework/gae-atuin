@@ -1,0 +1,47 @@
+.aboutsb {
+	background-image: url('../img/scalebox_hero_bg01_large.jpg');
+}
+
+@media (max-width: 979px) {
+	.aboutsb {
+		background-image: url('../img/scalebox_hero_bg01_medium.jpg');
+	}
+
+}
+
+@media (max-width: 768px) {
+	.aboutsb {
+		background-image: url('../img/scalebox_hero_bg01_small.jpg');
+	}
+	
+}
+
+h1 a, h1 a:hover {
+	color: inherit;
+	text-decoration: inherit;
+}
+
+.brand {
+	font-family: 'Syncopate', sans-serif;
+}
+
+.header-wide {
+	background-color: #F7F7F7;
+	border-bottom: solid 1px #999999;
+	margin-bottom: 40px;
+}
+
+.body-wide {
+	min-height: 400px;
+}
+
+.footer {
+}
+
+.footer-wide {
+	background-color: #e0e0e0;
+	border-top: solid 1px #a0a0a0;
+	margin-top: 40px;
+	min-height: 100px;
+
+}

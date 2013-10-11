@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="header-wide">
+	<div class="container">
+		<div>
+			<ul class="nav nav-pills pull-right">
+				{% if current_user.is_authenticated() %}
+					<li {% if menid == 'admin' %}class="active"{% endif %}>
+						<a href="{{ url_for('admin.index') }}" title="Admin Area">Admin</a>
+					</li>
+					<li>
+						<a href="{{ url_for('auth.logout') }}" title="Disconnect">Logout</a>
+					</li>
+				{% else %}
+					<li>
+						<a href="{{ url_for('auth.login') }}" title="Login">Login</a>
+					</li>
+				{% endif %}
+			</ul>
+				<h1><a class="brand" href="/" title="WEBSITE">WEBSITE</a></h1>
+		</div>
+	</div>
+</div>
+<div class="body-wide">
+	<div class="container">
+		{% block contentbody %}{% endblock %}
+	</div>
+</div>
+<div class="footer-wide">
+	<div class="container">
+		<div class="footer">
+			<small>&copy; <span class="brand">WEBSITE</span></small>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+</script>
+{% endblock %}

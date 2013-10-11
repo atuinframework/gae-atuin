@@ -1,0 +1,16 @@
+{% extends 'base-nav.html' %}
+
+{% block title %}Admin - {% block subtitle %} {% endblock%} - {% endblock%}
+
+{% block contentbody -%}
+	<div class="row">
+		<div class="col-md-3">
+			{% include 'admin/menu.html' %}
+		</div>
+		<div class="col-md-9">
+			{% block content_right %}{% endblock %}
+		</div>
+	</div>
+{%- endblock %}
+
+
