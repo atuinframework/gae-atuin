@@ -7,8 +7,7 @@ from flask import Flask, g, request, url_for
 from flask.ext.babel import Babel, get_locale as babel_get_locale
 
 import settings
-#import datastore
-#import auth
+import auth
 
 app = Flask(__name__)
 app.debug = settings.DEBUG
@@ -70,6 +69,8 @@ def inject_custom():
 	d = {
 			'SITE_TITLE': settings.SITE_TITLE,
 			'lurl_for': g.lurl_for,
+			'users': auth.users,
+			'current_user': auth.current_user,
 		}
 	return d
 
