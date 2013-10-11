@@ -1,6 +1,6 @@
 # GAE - Flask - Atuin
 
-Atuin is Scalebox's Flask web application skeleton, Google AppEngine adaptation
+Atuin is Scalebox's Flask web application skeleton, Google AppEngine version
 
 ## Package requirements:
 
@@ -21,7 +21,7 @@ Atuin is Scalebox's Flask web application skeleton, Google AppEngine adaptation
 
 # Translations
 
-... docs in progress ...
+Flask-Babel is fully supported. [Official documentation](http://pythonhosted.org/Flask-Babel/)
 
 
 # Production Environment
@@ -32,3 +32,9 @@ Atuin is Scalebox's Flask web application skeleton, Google AppEngine adaptation
 # Other tools
 
 ... docs in progress ...
+
+
+# ToDo
+
+ * Authentication abstractions
+ * Cache abstractions
