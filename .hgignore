@@ -4,5 +4,6 @@ syntax: glob
 _generated_media/*
 *.komodoproject
 *.sublime-*
+tmp/*
 
 # Project specific

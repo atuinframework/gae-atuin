@@ -16,23 +16,6 @@ try:
 except Exception:
 	MULTILANGUAGE = False
 
-try:
-	NEWRELIC = config.NEWRELIC
-	NEWRELIC_CONFIG = config.NEWRELIC_CONFIG
-except Exception:
-	NEWRELIC = False
-	NEWRELIC_CONFIG = ''
-	
-try:
-	CACHE_CONFIG = config.CACHE_CONFIG
-except Exception:
-	CACHE_CONFIG = {'CACHE_TYPE': 'simple'}
-	
-try:
-	SENTRY_DSN = config.SENTRY_DSN
-except Exception:
-	SENTRY_DSN = False
-
 # apps mounts MUST BE present
 from urls import mounts
 

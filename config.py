@@ -10,16 +10,6 @@ SECRET_KEY = 'somerandom-;:=()=yty'
 SITE_TITLE = "AWESOMESITE"
 
 # multilanguage support
-MULTILANGUAGE = True
+MULTILANGUAGE = False
 MULTILANGUAGE_LANGS = ['en', 'it']
 
-# considered only in production (DEBUG False)
-#CACHE_CONFIG = {'CACHE_TYPE': 'memcached'}
-CACHE_CONFIG = {'CACHE_TYPE': 'simple'}
-
-# whether to use newrelic (autodiscovery mode)
-NEWRELIC = False
-NEWRELIC_CONFIG = "newrelic.ini"
-
-# whether to use sentry
-SENTRY_DSN = False
