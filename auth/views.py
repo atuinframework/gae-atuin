@@ -2,6 +2,8 @@ from flask.blueprints import Blueprint
 from flask import request, redirect, flash, render_template, session
 from auth import login_manager, login_required
 from flask.ext.login import login_user, logout_user
+from google.appengine.api import users as gae_users
+
 import datetime
 
 bp = Blueprint('auth', __name__)

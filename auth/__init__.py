@@ -1,25 +1,17 @@
 """
-Based on the original decorators.py from https://github.com/kamalgill/flask-appengine-template/blob/master/src/application/decorators.py
 
+With help from the original decorators.py from https://github.com/kamalgill/flask-appengine-template/blob/master/src/application/decorators.py
 """
-
+from flask.ext import login
 from functools import wraps
 from google.appengine.api import users
 from flask import redirect, request, abort
-from werkzeug.local import LocalProxy
 
+login_manager = login.LoginManager()
+login_required = login.login_required
+current_user = login.current_user
 
-def login_required(func):
-    """Requires standard login credentials"""
-    @wraps(func)
-    def decorated_view(*args, **kwargs):
-        if not users.get_current_user():
-            return redirect(users.create_login_url(request.url))
-        return func(*args, **kwargs)
-    return decorated_view
-
-
-def admin_required(func):
+def gae_admin_required(func):
     """Requires App Engine admin credentials"""
     @wraps(func)
     def decorated_view(*args, **kwargs):
@@ -31,5 +23,4 @@ def admin_required(func):
     return decorated_view
 
 
-current_user = LocalProxy(lambda: users.get_current_user())
 

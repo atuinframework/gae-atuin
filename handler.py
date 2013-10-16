@@ -14,7 +14,7 @@ app.debug = settings.DEBUG
 app.secret_key = settings.SECRET_KEY
 
 #Auth
-#auth.login_manager.setup_app(app)
+auth.login_manager.setup_app(app)
 
 #Babel
 babel = Babel(app)

@@ -3,28 +3,22 @@ import random
 import hashlib
 import collections
 
-from datastore import db
+from google.appengine.ext import ndb
 
-class User(db.Model):
-	__tablename__ = 'users'
+class User(ndb.Model):
 	
-	id = db.Column(db.Integer, primary_key=True)
-	usertype = db.Column(db.String)
-	username = db.Column(db.String, unique=True, index=True)
-	password = db.Column(db.String)
-	name = db.Column(db.String)
-	notes = db.Column(db.Text)
-	role = db.Column(db.String, index=True)
+	username = ndb.StringProperty(required=True)
+	password = ndb.StringProperty(indexed=False)
 	
-	ins_timestamp = db.Column(db.DateTime, default=datetime.datetime.now)
-	upd_timestamp = db.Column(db.DateTime, default=datetime.datetime.now)
+	name = ndb.StringProperty()
 	
-	last_login = db.Column(db.DateTime, default=None)
+	notes = ndb.StringProperty(indexed=False)
+	roles = ndb.StringProperty(repeated=True)
 	
-	usertypes_d = collections.OrderedDict([
-		('staff', "Staff"),
-		('customer', "Customer"),
-	])
+	ins_timestamp = ndb.DateTimeProperty(auto_now_add=True, indexed=False)
+	upd_timestamp = ndb.DateTimeProperty(auto_now_add=True, indexed=False)
+	
+	last_login = ndb.DateTimeProperty(auto_now_add=True)
 	
 	roles_d = collections.OrderedDict([
 		('ADMIN', "Administrator"),
