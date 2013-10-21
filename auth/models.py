@@ -31,10 +31,10 @@ class User(ndb.Model):
 	])
 	
 	def __repr__(self):
-		return "<User %s %s roles=%s>" % (self.id, self.username, self.roles)
+		return "<User %s %s roles=%s>" % (self.key, self.username, self.roles)
 	
 	def get_id(self):
-		return self.id
+		return self.key.id()
 	
 	def is_active(self):
 		return self.active

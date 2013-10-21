@@ -5,16 +5,16 @@
 	<div class="container">
 		<div>
 			<ul class="nav nav-pills pull-right">
-				{% if current_user %}
+				{% if current_user.is_authenticated() %}
 					<li {% if menid == 'admin' %}class="active"{% endif %}>
 						<a href="" title="Admin Area">Admin</a>
 					</li>
 					<li>
-						<a href="{{ users.create_logout_url('/') }}" title="Disconnect">Logout {{ current_user.nickname() }}</a>
+						<a href="{{ lurl_for('auth.logout') }}" title="Disconnect">Logout {{ current_user.name }}</a>
 					</li>
 				{% else %}
 					<li>
-						<a href="{{ users.create_login_url() }}" title="Login">Login</a>
+						<a href="{{ lurl_for('auth.login') }}" title="Login">Login</a>
 					</li>
 				{% endif %}
 			</ul>

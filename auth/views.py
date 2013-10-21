@@ -8,11 +8,11 @@ import datetime
 
 bp = Blueprint('auth', __name__)
 
-from models import db, User
+from models import User
 
 @login_manager.user_loader
 def load_user(id):
-	return User.query.get(id)
+	return User.get_by_id(id)
 
 
 @bp.route("/login", methods=['GET', 'POST'])
@@ -46,6 +46,35 @@ def logout():
 	session.pop('table_id', None)
 	return redirect(request.args.get("next") or '/')
 
+@bp.route("/external/google")
+def external_login_google():
+	gae_current_user = gae_users.get_current_user()
+	if gae_current_user:
+		# Google AppEngine Logged in user
+		# * check if there's a corresponding local user
+		auth_id = 'google_' + gae_current_user.user_id()
+		user = User.query(User.auth_ids == auth_id).get()
+		if not user:
+			# not present - let's create it
+			print "!!! CREATE USER !!!"
+			user = User()
+			user.username = gae_current_user.email()
+			user.name = gae_current_user.nickname()
+			user.auth_ids.append(auth_id)
+			user.roles.append('USER')
+			user.put()
+		
+		if login_user(user):
+			user.last_login = datetime.datetime.now()
+			user.put()
+			return redirect('/')
+		
+	
+	flash('Login error')
+	return render_template('auth/loginpage.html', menuid="login")
+
 @login_manager.unauthorized_handler
 def unauthorized():
 	return render_template('auth/unauthorized.html', menuid="login", next=request.args.get("next")), 401
+
+

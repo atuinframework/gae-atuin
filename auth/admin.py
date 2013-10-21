@@ -7,7 +7,7 @@ from auth import login_required, current_user
 
 bp = Blueprint('auth.admin', __name__)
 
-from models import db, User
+from models import User
 
 @bp.route("/users")
 @login_required
