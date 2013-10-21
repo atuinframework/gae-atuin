@@ -1,11 +1,14 @@
 import datetime
 import random
-import hashlib
 import collections
+
+from passlib.hash import sha256_crypt
 
 from google.appengine.ext import ndb
 
 class User(ndb.Model):
+	
+	auth_ids = ndb.StringProperty(repeated=True)
 	
 	username = ndb.StringProperty(required=True)
 	password = ndb.StringProperty(indexed=False)
@@ -15,6 +18,8 @@ class User(ndb.Model):
 	notes = ndb.StringProperty(indexed=False)
 	roles = ndb.StringProperty(repeated=True)
 	
+	active = ndb.BooleanProperty(default=True)
+	
 	ins_timestamp = ndb.DateTimeProperty(auto_now_add=True, indexed=False)
 	upd_timestamp = ndb.DateTimeProperty(auto_now_add=True, indexed=False)
 	
@@ -22,17 +27,17 @@ class User(ndb.Model):
 	
 	roles_d = collections.OrderedDict([
 		('ADMIN', "Administrator"),
-		('CUSTOMER', "Customer"),
+		('USER', "Normal User"),
 	])
 	
 	def __repr__(self):
-		return "<User %s %s usertype=%s>" % (self.id, self.username, self.usertype)
+		return "<User %s %s roles=%s>" % (self.id, self.username, self.roles)
 	
 	def get_id(self):
 		return self.id
 	
 	def is_active(self):
-		return True
+		return self.active
 	
 	def is_anonymous(self):
 		return False
@@ -40,35 +45,19 @@ class User(ndb.Model):
 	def is_authenticated(self):
 		return True
 	
-	def __pwd(self, password, salt=None):
-		if not salt:
-			salt = ''
-			for x in xrange(random.randint(6, 10)):
-				salt += chr(random.randint(ord('0'), ord('z')))
-			
-		hashed = hashlib.sha256(salt + password).hexdigest()
-		pwd = '$$'.join((salt, hashed))
-		return pwd
-	
 	def set_password(self, password):
-		pwd = self.__pwd(password)
+		pwd = sha256_crypt.encrypt(password)
 		self.password = pwd
 		
 	def check_password(self, password):
-		salt = self.password.split('$$')[0]
-		pwd = self.__pwd(password, salt)
-		
-		if pwd == self.password:
+		if sha256_crypt.verify(password, self.password):
 			#login ok
 			return True
 		
 		return False
 		
-	def usertype_translated(self):
-		return self.usertypes_d.get(self.usertype, self.usertype)
-		
-	def role_translated(self):
-		return self.roles_d.get(self.role, self.role)
+	def roles_translated(self):
+		return [(role, self.roles_d.get(role, role)) for role in self.roles]
 	
 #class UserSession(db.Model):
 #	id = db.Column(db.Integer, primary_key=True)
