@@ -29,8 +29,14 @@ def lurl_for(ep, language=None, **kwargs):
 	if language:
 		# language override
 		# try the url with *language*, then without
+		# index_it variation
 		try:
 			return url_for(ep[:-2]+language, **kwargs)
+		except Exception:
+			pass
+		# index variation
+		try:
+			return url_for(ep+'_'+language, **kwargs)
 		except Exception:
 			return url_for(ep, **kwargs)
 	
@@ -61,7 +67,7 @@ if settings.MULTILANGUAGE:
 		if lang in settings.MULTILANGUAGE_LANGS:
 			return lang
 		else:
-			return 'en'
+			return settings.MULTILANGUAGE_LANGS[0]
 	
 
 @app.context_processor
