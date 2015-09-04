@@ -1,9 +1,10 @@
 syntax: glob
 
 *.pyc
+templates/.tmp_*
 _generated_media/*
 *.komodoproject
-*.sublime-*
+node_modules/*
 tmp/*
-
 # Project specific
+
