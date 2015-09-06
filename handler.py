@@ -3,6 +3,7 @@ import os, sys
 sys.path.insert(1, os.path.join(os.path.abspath('.'), 'lib'))
 
 from flask import Flask, g, request, url_for
+from werkzeug.routing import BuildError
 #from flask.ext.cache import Cache
 from flask.ext.babel import Babel, get_locale as babel_get_locale
 
@@ -41,16 +42,15 @@ def lurl_for(ep, language=None, **kwargs):
 			return url_for(ep, **kwargs)
 	
 	# no override, current language
-	return url_for(ep+'_'+g.language, **kwargs)
+	try:
+		return url_for(ep+'_'+g.language, **kwargs)
+	except BuildError:
+		return url_for(ep, **kwargs)
 	
 
 @app.before_request
 def func():
 	#g.cache = cache
-	try:
-	  g.sentry = sentry
-	except:
-	  pass
 	
 	if settings.MULTILANGUAGE:
 		g.babel = babel
@@ -63,11 +63,19 @@ def func():
 if settings.MULTILANGUAGE:
 	@babel.localeselector
 	def get_locale():
+		# lang in path
 		lang = request.path[1:].split('/', 1)[0]
 		if lang in settings.MULTILANGUAGE_LANGS:
 			return lang
-		else:
-			return settings.MULTILANGUAGE_LANGS[0]
+
+		#lang in accept-language header
+		if request.accept_languages:
+			lang = request.accept_languages[0][0].split('-')[0]
+			if lang in settings.MULTILANGUAGE_LANGS:
+				return lang
+
+		# default lang
+		return settings.MULTILANGUAGE_LANGS[0]
 	
 
 @app.context_processor
