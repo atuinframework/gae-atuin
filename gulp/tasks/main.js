@@ -14,9 +14,23 @@ gulp.task(	'run',
 			}
 );
 
+gulp.task(	'update',
+			'Management of the development environment.',
+			function() {
+				$.util.log('TODO!');
+			}
+);
+
 gulp.task(	'monitor',
 			'Real time check for css and js.',
 			function() {
 				$.sequence(['css', 'css_admin'], ['js', 'js_admin'], 'watch')();
+			}
+);
+
+gulp.task(	'deploy',
+			'Deploy on gae.',
+			function() {
+				$.util.log('TODO!');
 			}
 );
