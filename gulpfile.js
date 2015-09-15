@@ -18,8 +18,10 @@ $.util.colors.green('GULP TASKS\n'),
 	"\t", $.util.colors.yellow('update\n'),
 		"\t\t\Management of the development environment.\n\t\tIt checks that all dependencies are satisfied, initializes the env packages and update them.\n\n",
 		
-	"\t", $.util.colors.yellow('monitor\n'),
-		"\t\t\Real time check for css and js.\n\t\tIt handles errors and rebuilds the minified and compiled files.\n\n",
+	"\t", $.util.colors.yellow('monitor [--type production]\n'),
+		"\t\t\Real time check for css and js.\n\t\tIt handles errors and rebuilds the minified and compiled files.\n\t\t",
+		$.util.colors.magenta('--type production'),
+		" compress css and obfuscate js.\n\n",
 	
 	"\t", $.util.colors.yellow('deploy\n'),
 		"\t\t\Deploy on gae.\n"

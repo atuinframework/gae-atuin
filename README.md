@@ -51,9 +51,10 @@ Suggestion use **two** terminal window for:
     **management of the development environment**
     It checks that all dependencies are satisfied, initializes the env packages and update them
 
- - `gulp monitor`
+ - `gulp monitor [--type production]`
 	**real time check for css and js**
 	It handles errors and rebuilds the minified and compiled files
+	`--type production` compress css and obfuscate js
 
  - `gulp deploy`
    **deploy**
