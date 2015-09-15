@@ -2,18 +2,17 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>{% block title %}{% endblock %}{{ SITE_TITLE }} - {{ _('title text') }}</title>
 		<meta name="description" content="{% block metadescription %}{% endblock %}{% trans %}Base metadescription text{% endtrans %}">
+		<title>{% block title %}{% endblock %}{{ SITE_TITLE }} - {{ _('title text') }}</title>
 		<!-- Bootstrap -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href='http://fonts.googleapis.com/css?family=Syncopate:700' rel='stylesheet' type='text/css'>
-		<!-- Bootstrap -->
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 		<!-- /Bootstrap -->
+		<link href='http://fonts.googleapis.com/css?family=Syncopate:700' rel='stylesheet' type='text/css'>
 		<!-- FontAwesome -->
 		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 		<!-- /FontAwesome -->
-		<link href="/static/css/main.css" rel="stylesheet">
+		<link href="/static/min/css/style.css" rel="stylesheet">
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 		
 		<script>
@@ -31,7 +30,8 @@
 	<body>
 		{% block content %}{% endblock %}
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+		<script src="/static/min/js/all.js"></script>
+		{% block admin_foot %}{% endblock %}
 		{% block foot %}{% endblock %}
 	</body>
 </html>
-
