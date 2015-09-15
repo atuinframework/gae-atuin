@@ -14,10 +14,7 @@ config ={
 		paths.static.src.js.root + '/admin/*.js'	
 	],
 	'img' : [
-		paths.static.src.img.root + '/*.jpg'
-	],
-	'img_admin' : [
-		paths.static.src.img.root + '/admin/*'
+		paths.static.src.img.root + '/**/*.@(jpg|gif|png|svg)'
 	]
 }
 

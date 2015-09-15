@@ -15,6 +15,6 @@ gulp.task(	'clean',
 gulp.task(	'clean:min',
 			false,
 			function () {
-				del(paths.static.min.root);
+				return del(paths.static.min.root);
 			}
 );

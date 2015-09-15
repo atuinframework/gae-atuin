@@ -15,10 +15,16 @@ p.static.dev.root = p.static.root + '/dev';
 // static/min
 p.static.min = {};
 p.static.min.root = p.static.root + '/min';
+p.static.min.img = {};
+p.static.min.img.root = p.static.min.root + '/img';
+
 
 // static/src
 p.static.src = {};
 p.static.src.root = p.static.root + '/src';
+
+//TODO min js css img
+
 
 // static/src/css
 p.static.src.css = {};

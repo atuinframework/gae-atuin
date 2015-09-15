@@ -24,7 +24,7 @@ gulp.task(	'update',
 gulp.task(	'monitor',
 			'Real time check for css and js.',
 			function() {
-				$.sequence(['css', 'css_admin'], ['js', 'js_admin'], 'watch')();
+				$.sequence(['css', 'css_admin', 'js', 'js_admin', 'img'], 'watch')();
 			}
 );
 

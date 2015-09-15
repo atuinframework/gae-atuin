@@ -8,8 +8,8 @@ var gulp = require('gulp-help')(require('gulp')),
 gulp.task(	'npm',
 			false,
 			function() {
-				gulp.src('package.json')
-				.pipe($.plumber())
-				.pipe( $.start() );
+				return gulp.src('package.json')
+						.pipe($.plumber())
+						.pipe( $.start() );
 			}
 );

@@ -4,57 +4,18 @@ var gulp = require('gulp-help')(require('gulp')),
 	config = require('../config.js'),
 	paths = require('../paths.js'),
 	util = require('../util.js'),
-	jpegtran = require('imagemin-jpegtran'),
-	pngquant = require('imagemin-pngquant'),
-	gifsicle = require('imagemin-gifsicle'),
-	svgo = require('imagemin-svgo');	
+	changed = require('gulp-changed');	
 
-// public
+// public and admin specific
 gulp.task(	'img',
 			false,
 			function() {
-				gulp.src(config.img)
-				.pipe($.imagemin({
-					progressive: true,
-					svgoPlugins: [{removeViewBox: false}],
-					use: [
-						jpegtran({progressive: true}), //, arithmetic: true}),
-						pngquant({progressive: true})
-						  ]
-				}))
-				.pipe(gulp.dest(paths.static.min.root + "/img"));
-				/*
-				gulp.src(config.css)
-				.pipe($.plumber({
-					errorHandler: util.onError
-				}))
-				.pipe($.sass().on('error', util.onError))
-				.pipe($.autoprefixer({
-					cascade: false
-				}))
-				.pipe($.size({ title: 'LOG css' }))
-				.pipe( $.util.env.type === 'production' ? $.minifyCss() : $.util.noop())
-				.pipe($.size({ title: 'LOG css:min' }))
-				.pipe(gulp.dest(paths.static.min.root + "/css"));
-				*/
-			}
-);
-
-// admin specific
-gulp.task(	'img_admin',
-			false,
-			function() {
-				gulp.src(config.css_admin)
-				.pipe($.plumber({
-					errorHandler: util.onError
-				}))
-				.pipe($.sass().on('error', util.onError))
-				.pipe($.autoprefixer({
-					cascade: false
-				}))
-				.pipe($.size({ title: 'LOG css_admin' }))
-				.pipe( $.util.env.type === 'production' ? $.minifyCss() : $.util.noop())
-				.pipe($.size({ title: 'LOG css_admin:min' }))
-				.pipe(gulp.dest(paths.static.min.root + "/css/admin"));
+				return gulp.src(config.img)
+						.pipe(changed(paths.static.min.root + "/img"))
+						.pipe($.imagemin({
+							progressive: true,
+							svgoPlugins: [{removeViewBox: false}]
+						}))
+						.pipe(gulp.dest(paths.static.min.root + "/img"));
 			}
 );
