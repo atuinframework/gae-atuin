@@ -7,7 +7,7 @@ DEBUG = True
 SECRET_KEY = 'somerandom-;:=()=yty'
 
 # site title
-SITE_TITLE = "AWESOMESITE"
+SITE_TITLE = "GAE-ATUIN"
 
 # multilanguage support
 MULTILANGUAGE = False

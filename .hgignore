@@ -6,5 +6,6 @@ _generated_media/*
 *.komodoproject
 node_modules/*
 tmp/*
+static/min
 # Project specific
 
