@@ -28,4 +28,8 @@ p.static.src.css.root = p.static.src.root + '/css';
 p.static.src.js = {};
 p.static.src.js.root = p.static.src.root + '/js';
 
+// static/src/img
+p.static.src.img = {};
+p.static.src.img.root = p.static.src.root + '/img';
+
 module.exports = p;
