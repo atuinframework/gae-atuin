@@ -58,6 +58,14 @@ Suggestion use **two** terminal window for:
 
  - `gulp deploy`
    **deploy**
+   
+ - `clean[:min|:css|:js|:img]`
+    **cleans files**
+	From all project clean: `*.pyc *.pyo *.~`
+	`:min` Clean all minified fiels  app/static/min
+	`:css` Clean minified CSS  app/static/min/css
+	`:js`  Clean minified JS  app/static/min/js
+	`:img` Clean optimized img  app/static/min/img
 
 ## Translations
 

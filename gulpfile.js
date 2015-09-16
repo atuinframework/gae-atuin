@@ -34,7 +34,7 @@ gulp.task(	'default',
 					
 					// clean
 					$.util.colors.yellow('clean[:min|:css|:js|:img]') + '\n\t\t' +
-					'From all project clean: *.pyc *.pyo *.~\n\t\t' +
+					'Cleans files.\n\t\tFrom all project clean: *.pyc *.pyo *.~\n\t\t' +
 					$.util.colors.magenta(':min') +	' Clean all minified fiels  ' 	+ $.util.colors.green(paths.static.min.root) 	 + '\n\t\t' +
 					$.util.colors.magenta(':css') + ' Clean minified CSS  ' 		+ $.util.colors.green(config.min.css) + '\n\t\t' +
 					$.util.colors.magenta(':js')  + ' Clean minified JS  ' 			+ $.util.colors.green(config.min.js)  + '\n\t\t' +
