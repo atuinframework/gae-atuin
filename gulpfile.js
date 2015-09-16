@@ -2,6 +2,7 @@
 var gulp = require('gulp-help')(require('gulp')),
 	requireDir = require('require-dir')('./gulp/tasks'),
 	paths = require('./gulp/paths.js'),
+	config = require('./gulp/config.js'),
 	$ = require('gulp-load-plugins')();
 	
 gulp.task(	'default',
@@ -35,9 +36,9 @@ gulp.task(	'default',
 					$.util.colors.yellow('clean[:min|:css|:js|:img]') + '\n\t\t' +
 					'From all project clean: *.pyc *.pyo *.~\n\t\t' +
 					$.util.colors.magenta(':min') +	' Clean all minified fiels  ' 	+ $.util.colors.green(paths.static.min.root) 	 + '\n\t\t' +
-					$.util.colors.magenta(':css') + ' Clean minified CSS  ' 		+ $.util.colors.green(paths.static.min.css.root) + '\n\t\t' +
-					$.util.colors.magenta(':js')  + ' Clean minified JS  ' 			+ $.util.colors.green(paths.static.min.js.root)  + '\n\t\t' +
-					$.util.colors.magenta(':img') + ' Clean optimized img  ' 		+ $.util.colors.green(paths.static.min.img.root) + '\n'
+					$.util.colors.magenta(':css') + ' Clean minified CSS  ' 		+ $.util.colors.green(config.min.css) + '\n\t\t' +
+					$.util.colors.magenta(':js')  + ' Clean minified JS  ' 			+ $.util.colors.green(config.min.js)  + '\n\t\t' +
+					$.util.colors.magenta(':img') + ' Clean optimized img  ' 		+ $.util.colors.green(config.min.img) + '\n'
 				);
 			}
 );
