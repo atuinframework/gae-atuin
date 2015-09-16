@@ -9,7 +9,7 @@ var gulp = require('gulp-help')(require('gulp')),
 gulp.task(	'js',
 		    false,
 			function() {
-				return gulp.src(config.js)
+				return gulp.src(config.src.js)
 						.pipe( $.plumber({
 							errorHandler: util.onError
 						}))
@@ -17,7 +17,7 @@ gulp.task(	'js',
 						.pipe($.size({ title: 'LOG js ' }))
 						.pipe($.util.env.type === 'production' ? $.uglify({mangle:true}) : $.util.noop())
 						.pipe($.size({ title: 'LOG js:min ' }))
-						.pipe(gulp.dest(paths.static.min.root + '/js/all.js'));
+						.pipe(gulp.dest(config.min.js));
 			}	
 );
 
@@ -25,7 +25,7 @@ gulp.task(	'js',
 gulp.task(	'js_admin',
 		    false,
 			function() {
-				return gulp.src(config.js_admin)
+				return gulp.src(config.src.js_admin)
 						.pipe( $.plumber({
 							errorHandler: util.onError
 						}))
@@ -33,6 +33,6 @@ gulp.task(	'js_admin',
 						.pipe($.size({ title: 'LOG js_admin ' }))
 						.pipe($.util.env.type === 'production' ? $.uglify({mangle:true}) : $.util.noop())
 						.pipe($.size({ title: 'LOG js_admin:min ' }))
-						.pipe(gulp.dest(paths.static.min.root + '/js/admin/all.js'));
+						.pipe(gulp.dest(config.min.js_admin));
 			}	
 );

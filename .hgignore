@@ -1,11 +1,14 @@
+syntax: regexp
+
+.+\.(py(c|o))$
+.+\.\~$
+^node_modules
+^tmp
+^app/static/min
+
 syntax: glob
 
-*.pyc
-*.pyo
-*.~
 *.komodoproject
-node_modules
-tmp
-app/static/min
 
 # Project specific
+

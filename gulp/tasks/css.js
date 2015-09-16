@@ -9,7 +9,7 @@ var gulp = require('gulp-help')(require('gulp')),
 gulp.task(	'css',
 			false,
 			function() {
-				return gulp.src(config.css)
+				return gulp.src(config.src.css)
 						.pipe($.plumber({
 							errorHandler: util.onError
 						}))
@@ -20,7 +20,7 @@ gulp.task(	'css',
 						.pipe($.size({ title: 'LOG css' }))
 						.pipe( $.util.env.type === 'production' ? $.minifyCss() : $.util.noop())
 						.pipe($.size({ title: 'LOG css:min' }))
-						.pipe(gulp.dest(paths.static.min.root + "/css"));
+						.pipe(gulp.dest(config.min.css));
 			}
 );
 
@@ -28,7 +28,7 @@ gulp.task(	'css',
 gulp.task(	'css_admin',
 			false,
 			function() {
-				return gulp.src(config.css_admin)
+				return gulp.src(config.src.css_admin)
 						.pipe($.plumber({
 							errorHandler: util.onError
 						}))
@@ -39,6 +39,6 @@ gulp.task(	'css_admin',
 						.pipe($.size({ title: 'LOG css_admin' }))
 						.pipe( $.util.env.type === 'production' ? $.minifyCss() : $.util.noop())
 						.pipe($.size({ title: 'LOG css_admin:min' }))
-						.pipe(gulp.dest(paths.static.min.root + "/css/admin"));
+						.pipe(gulp.dest(config.min.css_admin));
 			}
 );

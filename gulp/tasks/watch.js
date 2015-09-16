@@ -8,11 +8,11 @@ var gulp = require('gulp-help')(require('gulp')),
 gulp.task(	'watch',
 			false,
 			function() {
-				gulp.watch(paths.static.src.root + '/css/*', ['css']);
-				gulp.watch(paths.static.src.root + '/css/admin/*', ['css_admin']);
-				gulp.watch(paths.static.src.root + '/js/*', ['js']);
-				gulp.watch(paths.static.src.root + '/js/admin/*', ['js_admin']);
-				var watchImg = gulp.watch(paths.static.src.root + '/img/**', ['img']);
+				gulp.watch(paths.static.src.css.root + '/*', ['css']);
+				gulp.watch(paths.static.src.css.root + '/admin/*', ['css_admin']);
+				gulp.watch(paths.static.src.js.root + '/*', ['js']);
+				gulp.watch(paths.static.src.js.root + '/admin/*', ['js_admin']);
+				var watchImg = gulp.watch(paths.static.src.img.root + '/**', ['img']);
 				watchImg.on('change', function(ev){
 					if (ev.type==='deleted') {
 						del( path.relative('./', ev.path).replace(paths.static.src.img.root, paths.static.min.img.root) );
