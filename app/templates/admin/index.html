@@ -1,5 +1,12 @@
 {% extends 'admin/base.html' %}
 
 {% block contentbody %}
-<h2>Dashboard</h2>
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">Dashboard</div>
+		<div class="panel-body">
+			{{ lipsum(2) }}
+		</div>
+	</div>
+</div>
 {% endblock %}

@@ -1,25 +1,16 @@
 @import "_variables";
 
-.aboutsb {
-	background-image: url('../img/scalebox_hero_bg01_large.jpg');
-}
-
 @media (max-width: 979px) {
-	.aboutsb {
-		background-image: url('../img/scalebox_hero_bg01_medium.jpg');
-	}
-
 }
 
 @media (max-width: 768px) {
-	.aboutsb {
-		background-image: url('../img/scalebox_hero_bg01_small.jpg');
-	}
-	
 }
 h1 a, h1 a:hover {
-	color: inherit;
-	text-decoration: inherit;
+}
+
+body {
+	background-color: $color-bg-2;
+	color: $color-fg-2;
 }
 
 .brand {
@@ -27,12 +18,17 @@ h1 a, h1 a:hover {
 }
 
 .header-wide {
-	background-color: #F7F7F7;
-	border-bottom: solid 1px #999999;
-	margin-bottom: 40px;
+	background-color: $color-bg-1;
+	color: $color-fg-1;
+	border-bottom: solid 1px $color-fg-1;
+	
+	a {
+		color: $color-fg-1;
+	}
 }
 
 .body-wide {
+	padding-top: 50px;
 	min-height: 400px;
 }
 
@@ -40,9 +36,9 @@ h1 a, h1 a:hover {
 }
 
 .footer-wide {
-	background-color: #e0e0e0;
-	border-top: solid 1px #a0a0a0;
-	margin-top: 40px;
+	background-color: $color-bg-3;
+	color: $color-fg-3;
+	border-top: solid 1px $color-fg-3;
 	min-height: 100px;
 
 }

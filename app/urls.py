@@ -4,6 +4,7 @@ import home.views
 
 #admin & auth
 import auth.views, auth.admin
+import admin.admin
 #import admin.views
 
 
@@ -12,6 +13,6 @@ mounts = [
 	
 	('/auth', auth.views),
 	
-#	('/admin', admin.views),
+	('/admin', admin.admin),
 #	('/admin/auth', auth.admin),
 ]
