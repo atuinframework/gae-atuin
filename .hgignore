@@ -1,10 +1,11 @@
 syntax: glob
 
 *.pyc
-templates/.tmp_*
-_generated_media/*
+*.pyo
+*.~
 *.komodoproject
-node_modules/*
-tmp/*
+node_modules
+tmp
 app/static/min
+
 # Project specific
