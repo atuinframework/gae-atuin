@@ -1,16 +1,20 @@
-{% extends 'base-nav.html' %}
+{% extends 'base.html' %}
 
-{% block title %}Admin - {% block subtitle %} {% endblock%} - {% endblock%}
+{% block title %}{% block subtitle %} {% endblock%} - Admin - {% endblock%}
 
-{% block contentbody -%}
-	<div class="row">
-		<div class="col-md-3">
-			{% include 'admin/menu.html' %}
-		</div>
-		<div class="col-md-9">
-			{% block content_right %}{% endblock %}
-		</div>
-	</div>
+{% block css_admin %}
+		<link href="/static/min/css/admin/style.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block content -%}
+	{% include 'admin/navbar.html' %}
+	
+	{% block contentbody %}{% endblock %}
+
 {%- endblock %}
 
+{% block js_admin %}
+		<script src="/static/min/js/admin/all.js"></script>
+{% endblock %}
 

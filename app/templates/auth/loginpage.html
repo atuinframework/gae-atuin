@@ -6,17 +6,13 @@
 
 <div class="container">
 	<div class="row">
-		<!-- <div class="col-md-7">
-			{# % include 'auth/loginbanner.html' % #} 
-		</div> -->
-		<div class="col-md-5">
-			<div class="row">
-				<div class="col-md-offset-3 col-md-6">
-					<a href="{{ users.create_login_url(lurl_for('auth.external_login_google')) }}" class="btn btn-large btn-primary"><i class="icon icon-google-plus"> </i> | Sign in with Google</a>
-				</div>
-			</div>
-			<hr>
+		<div class="col-md-offset-2 col-md-4">
 			{% include 'auth/loginform.html' %}
+		</div>
+		<div class="col-md-offset-1 col-md-3">
+			<a href="{{ users.create_login_url(lurl_for('auth.external_login_google')) }}" class="btn btn-large btn-block btn-primary">
+				<i class="fa fa-google-plus"> </i> | Sign in with Google
+			</a>
 		</div>
 	</div>
 </div>

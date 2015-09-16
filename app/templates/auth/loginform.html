@@ -1,28 +1,33 @@
-	{% for message in get_flashed_messages() %}
-		<div class="alert alert-danger">
-			<strong>Error!</strong> {{ message }}
-		</div>
-	{% endfor %}
 <form class="form-horizontal" action="{{ url_for('auth.login') }}" method="post">
-	{% if next %}
-		<input type="hidden" name="next" value="{{ next }}">
-	{% endif %}
-  <div class="form-group">
-    <label class="col-md-3 control-label" for="inputUsername">Username</label>
-    <div class="col-md-6">
-      <input class="form-control" type="text" id="inputUsername" name="username" placeholder="Username">
-		<script>$('#inputUsername').focus()</script>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-md-3 control-label" for="inputPassword">Password</label>
-    <div class="col-md-6">
-      <input class="form-control" type="password" id="inputPassword" name="password" placeholder="Password">
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="col-md-offset-3 col-md-6">
-		<button type="submit" class="btn btn-primary">Sign in <i class="icon-chevron-right icon-white"> </i></button>
-    </div>
-  </div>
+<div class="panel panel-default">
+	<div class="panel-heading text-center">
+		<h2 class="panel-title">Login</h2>
+	</div>
+	<div class="panel-body">
+		{% for message in get_flashed_messages() %}
+			<div class="alert alert-danger">
+				<strong>Error!</strong> {{ message }}
+			</div>
+		{% endfor %}
+		{% if next %}
+			<input type="hidden" name="next" value="{{ next }}">
+		{% endif %}
+		<div class="form-group">
+			<label class="col-md-3 control-label" for="inputUsername">Username</label>
+			<div class="col-md-9">
+				<input class="form-control" type="text" id="inputUsername" name="username" placeholder="Username">
+				<script>$('#inputUsername').focus()</script>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-md-3 control-label" for="inputPassword">Password</label>
+			<div class="col-md-9">
+				<input class="form-control" type="password" id="inputPassword" name="password" placeholder="Password">
+			</div>
+		</div>
+	</div>
+	<div class="panel-footer text-center">
+		<button type="submit" class="btn btn-primary">Login <i class="fa fa-chevron-right"> </i></button>
+	</div>
+</div>
 </form>
