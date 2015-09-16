@@ -17,7 +17,7 @@ gulp.task(	'js',
 						.pipe($.size({ title: 'LOG js ' }))
 						.pipe($.util.env.type === 'production' ? $.uglify({mangle:true}) : $.util.noop())
 						.pipe($.size({ title: 'LOG js:min ' }))
-						.pipe(gulp.dest(paths.static.min.root + '/js/all.js'));
+						.pipe(gulp.dest(paths.static.min.root + '/js'));
 			}	
 );
 
@@ -33,6 +33,6 @@ gulp.task(	'js_admin',
 						.pipe($.size({ title: 'LOG js_admin ' }))
 						.pipe($.util.env.type === 'production' ? $.uglify({mangle:true}) : $.util.noop())
 						.pipe($.size({ title: 'LOG js_admin:min ' }))
-						.pipe(gulp.dest(paths.static.min.root + '/js/admin/all.js'));
+						.pipe(gulp.dest(paths.static.min.root + '/js/admin'));
 			}	
 );
