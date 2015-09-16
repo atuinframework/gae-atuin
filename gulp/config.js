@@ -27,8 +27,8 @@ config ={
 		'css' 		: paths.static.min.css.root,
 		'css_admin' : paths.static.min.css.root + '/admin',
 		'js' 		: paths.static.min.js.root,
-		'js_admin'  : paths.static.src.js.root + '/admin',
-		'img' 		: paths.static.src.img.root
+		'js_admin'  : paths.static.min.js.root + '/admin',
+		'img' 		: paths.static.min.img.root
 	}
 }
 
