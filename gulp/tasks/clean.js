@@ -8,7 +8,7 @@ gulp.task(	'clean',
 			function () {
 				del('./**/*.pyc');
 				del('./**/*.pyo');
-				del('./**/*.~');			
+				return del('./**/*.~');
 			}
 );
 
