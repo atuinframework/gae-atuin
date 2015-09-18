@@ -9,7 +9,6 @@ var gulp = require('gulp-help')(require('gulp')),
 gulp.task(	'update:pipinstall',
 			false,
 			function() {
-				$.util.log('aaaaa');
 				return gulp.src('requirements.txt')
 						.pipe($.start( [{
 							match: /requirements.txt$/,
