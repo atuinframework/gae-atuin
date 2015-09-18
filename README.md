@@ -76,6 +76,8 @@ Flask-Babel is fully supported. [Official documentation](http://pythonhosted.org
 
 ... docs in progress ...
 
+## Conventions
+`Admin` `_admin` at the end of name for admin variables
 
 ## TODO
 
