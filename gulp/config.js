@@ -14,7 +14,8 @@ config ={
 		'js' 		: paths.static.min.js.root,
 		'js_admin'  : paths.static.min.js.root + '/admin',
 		'img' 		: paths.static.min.img.root
-	}
+	},
+	'lib' : paths.lib.root
 }
 
 module.exports = config;

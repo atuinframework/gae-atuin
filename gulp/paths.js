@@ -42,4 +42,8 @@ p.static.min.js.root = p.static.min.root + '/js';
 p.static.min.img = {};
 p.static.min.img.root = p.static.min.root + '/img';
 
+// lib
+p.lib = {}
+p.lib.root = p.main.root + '/lib';
+
 module.exports = p;

@@ -15,9 +15,9 @@ gulp.task(	'run',
 );
 
 gulp.task(	'update',
-			'Management of the development environment.',
+			'Updates Python requirements.',
 			function() {
-				$.util.log('TODO!');
+				$.sequence('update:pip')();
 			}
 );
 

@@ -2,8 +2,35 @@
 var gulp = require('gulp-help')(require('gulp')),
 	fs = require('fs'),
 	$ = require('gulp-load-plugins')(),
-	paths = require('../paths');
+	config = require('../config'),
+	del = require('del');
 
+
+gulp.task(	'update:pipinstall',
+			false,
+			function() {
+				$.util.log('aaaaa');
+				return gulp.src('requirements.txt')
+						.pipe($.start( [{
+							match: /requirements.txt$/,
+							cmd: 'pip install -U -r requirements.txt -t ' + config.lib
+						}]));
+			}
+);
+
+gulp.task(	'update:pipcleandist',
+			false,
+			function() {
+				return del(config.lib + '/*.dist-info');
+			}
+);
+
+gulp.task(	'update:pip',
+			false,
+			function() {
+				return $.sequence('update:pipinstall', 'update:pipcleandist')();
+			}
+);
 
 gulp.task(	'npm',
 			false,
