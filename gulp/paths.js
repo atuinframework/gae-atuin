@@ -46,4 +46,12 @@ p.static.min.img.root = p.static.min.root + '/img';
 p.lib = {}
 p.lib.root = p.main.root + '/lib';
 
+// tmp
+p.tmp = {}
+p.tmp.root = 'tmp';
+
+// tmp/datastore
+p.tmp.datastore = {}
+p.tmp.datastore.root = p.tmp.root + '/datastore';
+
 module.exports = p;

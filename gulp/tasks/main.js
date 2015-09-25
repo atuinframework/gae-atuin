@@ -1,15 +1,17 @@
 'use strict';
 var gulp = require('gulp-help')(require('gulp')),
 	$ = require('gulp-load-plugins')(),
-	paths = require('../paths');
-
+	config = require('../config.js'),
+	mkdirs = require('mkdirs');
+	
 gulp.task(	'run',
 			'Run development server.',
 			function() {
+				mkdirs(config.tmp.datastore_db);
 				gulp.src('dev.sh')
 					.pipe($.start( [{
 						match: /dev.sh$/,
-						cmd: 'dev_appserver.py app'
+						cmd: 'dev_appserver.py --storage_path=tmp/datastore app'
 					}]));
 			}
 );
