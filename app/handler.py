@@ -1,5 +1,13 @@
 import os, sys
 
+DEVSERVER = os.environ.get(
+    'SERVER_SOFTWARE', 'Development').startswith('Development')
+
+if DEVSERVER:
+	import imp
+	file, pathname, description =  imp.find_module('_ctypes')
+	imp.load_module('_ctypes', file, pathname, description)
+
 sys.path.insert(1, os.path.join(os.path.abspath('.'), 'lib'))
 
 from flask import Flask, g, request, url_for

@@ -3,7 +3,7 @@ pytz>=2015.4
 itsdangerous==0.24
 Flask==0.10.1
 Flask-Babel==0.9
-Flask-Login==0.2.11
+Flask-Login==0.3.0
 flask-wtf==0.12
 Markdown==2.6.2
 passlib==1.6.5
