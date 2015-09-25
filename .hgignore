@@ -9,7 +9,8 @@ syntax: regexp
 
 syntax: glob
 
+Thumbs.db
+.DS_Store
 *.komodoproject
 
 # Project specific
-
