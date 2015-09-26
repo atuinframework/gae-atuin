@@ -5,7 +5,7 @@
 	<div class="container">
 		<div>
 			<ul class="nav nav-pills pull-right">
-				{% if current_user.is_authenticated() %}
+				{% if current_user.is_authenticated %}
 					<li {% if menid == 'admin' %}class="active"{% endif %}>
 						<a href="{{ url_for('admin.index') }}" title="Admin Area">Admin</a>
 					</li>
