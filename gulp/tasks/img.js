@@ -9,12 +9,16 @@ var gulp = require('gulp-help')(require('gulp')),
 gulp.task(	'img',
 			false,
 			function() {
-				return gulp.src(config.src.img)
+				gulp.src(config.src.img)
+					.pipe(changed(config.min.img))
+					.pipe($.imagemin({
+						progressive: true,
+						svgoPlugins: [{removeViewBox:false}, {removeUselessStrokeAndFill:false}]
+					}))
+					.pipe(gulp.dest(config.min.img));
+				
+				return gulp.src(config.src.img_as_is)
 						.pipe(changed(config.min.img))
-						.pipe($.imagemin({
-							progressive: true,
-							svgoPlugins: [{removeViewBox: false}]
-						}))
-						.pipe(gulp.dest(config.min.img));
+						.pipe(gulp.dest(config.min.img))
 			}
 );

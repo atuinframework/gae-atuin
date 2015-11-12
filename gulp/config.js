@@ -6,7 +6,8 @@ config ={
 		'css_admin' : [ paths.static.src.css.root + '/admin/style.scss'	],
 		'js' 		: [ paths.static.src.js.root + '/*.js'	],
 		'js_admin'	: [ paths.static.src.js.root + '/admin/*.js' ],
-		'img' 		: [ paths.static.src.img.root + '/**/*.@(jpg|gif|png|svg)' ]
+		'img' 		: [ paths.static.src.img.root + '/**/*.@(jpg|gif|png)' ],
+		'img_as_is' : [ paths.static.src.img.root + '/**/*.@(svg)' ],
 	},
 	'min' : {
 		'css' 		: paths.static.min.css.root,
