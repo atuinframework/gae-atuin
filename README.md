@@ -78,7 +78,8 @@ Flask-Babel is fully supported. [Official documentation](http://pythonhosted.org
 
 ## Conventions
  - `Admin` `_admin` at the end of name for admin variables
- - `.btnSave`
+ - `.btnSave` `.btnNewWhatNew` `.normalContentCSSClass`
+ - `form_nameofcontent.html` `modal_nameofcontent.html` the content type of the file is a prefix
 
 ## TODO
 
