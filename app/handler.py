@@ -10,7 +10,7 @@ if DEVSERVER:
 
 sys.path.insert(1, os.path.join(os.path.abspath('.'), 'lib'))
 
-from flask import Flask, g, request, url_for
+from flask import Flask, g, request, session, url_for
 from werkzeug.routing import BuildError
 #from flask.ext.cache import Cache
 from flask.ext.babel import Babel, get_locale as babel_get_locale
@@ -18,6 +18,7 @@ from flask.ext.babel import Babel, get_locale as babel_get_locale
 import settings
 import auth
 import version
+import languages
 
 app = Flask(__name__)
 app.debug = settings.DEBUG
@@ -69,15 +70,24 @@ def func():
 	else:
 		g.lurl_for = url_for
 
+
 if settings.MULTILANGUAGE:
 	@babel.localeselector
 	def get_locale():
 		# lang in path
 		lang = request.path[1:].split('/', 1)[0]
 		if lang in settings.MULTILANGUAGE_LANGS:
+			sessionlang = session.get('lang')
+			if sessionlang != lang:
+				session['lang'] = lang
 			return lang
 
-		#lang in accept-language header
+		# lang in session
+		if 'lang' in session:
+			if session['lang'] in settings.MULTILANGUAGE_LANGS:
+				return session['lang']
+			
+		# last-resort: lang in accept-language header
 		if request.accept_languages:
 			lang = request.accept_languages[0][0].split('-')[0]
 			if lang in settings.MULTILANGUAGE_LANGS:
@@ -97,8 +107,10 @@ def inject_custom():
 			'lurl_for': g.lurl_for,
 			'users': auth.users,
 			'current_user': auth.current_user,
+			'languages': languages,
 		}
 	return d
+
 
 for (mount_position, mount_module) in settings.mounts:
 	app.register_blueprint(mount_module.bp, url_prefix=mount_position)
