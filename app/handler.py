@@ -17,6 +17,7 @@ from flask.ext.babel import Babel, get_locale as babel_get_locale
 
 import settings
 import auth
+import version
 
 app = Flask(__name__)
 app.debug = settings.DEBUG
@@ -90,6 +91,9 @@ if settings.MULTILANGUAGE:
 def inject_custom():
 	d = {
 			'SITE_TITLE': settings.SITE_TITLE,
+			'SITE_VERSION': version.string,
+			'SITE_VERSION_DATE': version.date_string,
+			'SITE_VERSION_FULL': version.full_string,
 			'lurl_for': g.lurl_for,
 			'users': auth.users,
 			'current_user': auth.current_user,
