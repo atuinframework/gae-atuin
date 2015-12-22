@@ -18,8 +18,8 @@ libraries:
 - name: markupsafe
   version: latest
 
-#inbound_services:
-#- warmup
+inbound_services:
+- warmup
 
 handlers:
 - url: /favicon.ico
@@ -35,3 +35,9 @@ handlers:
 
 - url: .*
   script: handler.app
+
+skip_files:
+- ^(.*/)?.*\.py[co]
+- ^(.*/)?.*~
+- ^(.*/)?Icon\r
+- ^static/src

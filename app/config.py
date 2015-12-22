@@ -1,3 +1,4 @@
+# - coding: utf-8 -
 # Configuration template file. Copy it to config.py
 
 # True to print all queries and autoreload

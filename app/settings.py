@@ -1,3 +1,4 @@
+# - coding: utf-8 -
 # Settings file
 # Why this file works like this?
 # When updating the application, it should ensure the application will run without updating config.py

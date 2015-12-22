@@ -1,3 +1,4 @@
+# - coding: utf-8 -
 import os, sys
 
 DEVSERVER = os.environ.get(
@@ -12,7 +13,7 @@ sys.path.insert(1, os.path.join(os.path.abspath('.'), 'lib'))
 
 from flask import Flask, g, request, session, url_for
 from werkzeug.routing import BuildError
-#from flask.ext.cache import Cache
+from flask.ext.cache import Cache
 from flask.ext.babel import Babel, get_locale as babel_get_locale
 
 import settings
@@ -31,10 +32,7 @@ auth.login_manager.setup_app(app)
 babel = Babel(app)
 
 #Cache
-# if settings.DEBUG:
-# 	cache = Cache(app, config={'CACHE_TYPE': 'simple'})
-# else:
-# 	cache = Cache(app, config=settings.CACHE_CONFIG)
+cache = Cache(app, config={'CACHE_TYPE': 'gaememcached'})
 
 def lurl_for(ep, language=None, **kwargs):
 	if language:
@@ -60,12 +58,13 @@ def lurl_for(ep, language=None, **kwargs):
 
 @app.before_request
 def func():
-	#g.cache = cache
+	g.cache = cache
 	
 	if settings.MULTILANGUAGE:
 		g.babel = babel
 		g.available_languages = settings.MULTILANGUAGE_LANGS
 		g.language = babel_get_locale().language
+		g.languages = languages.lang_title
 		g.lurl_for = lurl_for
 	else:
 		g.lurl_for = url_for
