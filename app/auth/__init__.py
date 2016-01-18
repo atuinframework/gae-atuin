@@ -1,3 +1,4 @@
+# - coding: utf-8 -
 """
 
 With help from the original decorators.py from https://github.com/kamalgill/flask-appengine-template/blob/master/src/application/decorators.py
@@ -8,6 +9,7 @@ from google.appengine.api import users
 from flask import redirect, request, abort
 
 login_manager = login.LoginManager()
+login_user = login.login_user
 login_required = login.login_required
 current_user = login.current_user
 

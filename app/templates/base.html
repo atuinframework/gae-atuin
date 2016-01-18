@@ -3,7 +3,9 @@
 	<head>
 		<meta charset="utf-8">
 		<title>{% block title %}{% endblock %}{{ SITE_TITLE }} - {{ _('title text') }}</title>
-		<meta name="description" content="{% block metadescription %}{% endblock %}{% trans %}Base metadescription text{% endtrans %}">
+		<link rel="icon" href="/static/favicon.png" type="image/png">
+		<link rel="shortcut icon" href="/static/favicon.png" type="image/png">
+		<link rel="apple-touch-icon" href="/static/favicon.png" type="image/png">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<!-- Bootstrap -->
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
@@ -11,7 +13,10 @@
 		<!-- FontAwesome -->
 		<link href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
 		<!-- /FontAwesome -->
+		<!-- jQuery -->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<!-- /jQuery -->
+
 		
 		<!-- ALL CSS -->
 		<link href="/static/min/css/style.css" rel="stylesheet">
@@ -37,9 +42,10 @@
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		{% block foot %}{% endblock %}
 		<!-- ALL JS -->
-		<script src="/static/min/js/all.js"></script>
+		<script src="/static/min/js/all.js?v={{ SITE_VERSION }}"></script>
 		{% block js_admin %}{% endblock %}
 		<!-- /ALL JS -->
+		{{ profiler_includes()|safe }}
 	</body>
 </html>
 

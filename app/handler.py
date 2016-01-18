@@ -9,12 +9,11 @@ if DEVSERVER:
 	file, pathname, description =  imp.find_module('_ctypes')
 	imp.load_module('_ctypes', file, pathname, description)
 
-sys.path.insert(1, os.path.join(os.path.abspath('.'), 'lib'))
-
 from flask import Flask, g, request, session, url_for
 from werkzeug.routing import BuildError
 from flask.ext.cache import Cache
 from flask.ext.babel import Babel, get_locale as babel_get_locale
+import gae_mini_profiler.templatetags
 
 import settings
 import auth
@@ -69,7 +68,6 @@ def func():
 	else:
 		g.lurl_for = url_for
 
-
 if settings.MULTILANGUAGE:
 	@babel.localeselector
 	def get_locale():
@@ -107,6 +105,7 @@ def inject_custom():
 			'users': auth.users,
 			'current_user': auth.current_user,
 			'languages': languages,
+			'profiler_includes': gae_mini_profiler.templatetags.profiler_includes,
 		}
 	return d
 
