@@ -18,7 +18,7 @@ gulp.task(	'css',
 							cascade: false
 						}))
 						.pipe($.size({ title: 'LOG css' }))
-						.pipe( $.util.env.type === 'production' ? $.minifyCss() : $.util.noop())
+						.pipe( $.util.env.type === 'production' ? $.cssnano() : $.util.noop())
 						.pipe($.size({ title: 'LOG css:min' }))
 						.pipe(gulp.dest(config.min.css));
 			}
@@ -37,7 +37,7 @@ gulp.task(	'css_admin',
 							cascade: false
 						}))
 						.pipe($.size({ title: 'LOG css_admin' }))
-						.pipe( $.util.env.type === 'production' ? $.minifyCss() : $.util.noop())
+						.pipe( $.util.env.type === 'production' ? $.cssnano() : $.util.noop())
 						.pipe($.size({ title: 'LOG css_admin:min' }))
 						.pipe(gulp.dest(config.min.css_admin));
 			}

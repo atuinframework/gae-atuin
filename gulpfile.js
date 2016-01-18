@@ -38,7 +38,17 @@ gulp.task(	'default',
 					$.util.colors.magenta(':min') +	' Clean all minified fiels  ' 	+ $.util.colors.green(paths.static.min.root) 	 + '\n\t\t' +
 					$.util.colors.magenta(':css') + ' Clean minified CSS  ' 		+ $.util.colors.green(config.min.css) + '\n\t\t' +
 					$.util.colors.magenta(':js')  + ' Clean minified JS  ' 			+ $.util.colors.green(config.min.js)  + '\n\t\t' +
-					$.util.colors.magenta(':img') + ' Clean optimized img  ' 		+ $.util.colors.green(config.min.img) + '\n'
+					$.util.colors.magenta(':img') + ' Clean optimized img  ' 		+ $.util.colors.green(config.min.img) + '\n' +
+					
+					// translations subsystem
+					'\n\n\tLOCALIZATION SUBSYSTEM\n\n\t' +
+					$.util.colors.yellow('translations<:extract|:update|:compile|:init>') + '\n\t\t' +
+					'Manages translations. Each language must be initialized using :init.\n\t\t' +
+					$.util.colors.magenta(':extract') +	' Extracts translations from source \n\t\t' +
+					$.util.colors.magenta(':update') +	' Updates translations messages files for every language \n\t\t' +
+					$.util.colors.magenta(':compile') +	' Compiles messages.po files for every language \n\t\t' +
+					$.util.colors.magenta(':init --lang <code>') +	' Initialize a new language. Code must be language code like \'en\', \'de\', ...\n'
+					
 				);
 			}
 );
