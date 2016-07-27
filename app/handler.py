@@ -11,8 +11,8 @@ if DEVSERVER:
 
 from flask import Flask, g, request, session, url_for
 from werkzeug.routing import BuildError
-from flask.ext.cache import Cache
-from flask.ext.babel import Babel, get_locale as babel_get_locale
+from flask_caching import Cache
+from flask_babel import Babel, get_locale as babel_get_locale
 import gae_mini_profiler.templatetags
 
 import settings
@@ -45,14 +45,17 @@ def lurl_for(ep, language=None, **kwargs):
 		# index variation
 		try:
 			return url_for(ep+'_'+language, **kwargs)
-		except Exception:
+		except BuildError:
 			return url_for(ep, **kwargs)
 	
 	# no override, current language
 	try:
 		return url_for(ep+'_'+g.language, **kwargs)
 	except BuildError:
-		return url_for(ep, **kwargs)
+		try:
+			return url_for(ep+'_'+settings.MULTILANGUAGE_LANGS[0], **kwargs)
+		except BuildError:
+			return url_for(ep, **kwargs)
 	
 
 @app.before_request
