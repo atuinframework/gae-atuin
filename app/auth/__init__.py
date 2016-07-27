@@ -3,7 +3,7 @@
 
 With help from the original decorators.py from https://github.com/kamalgill/flask-appengine-template/blob/master/src/application/decorators.py
 """
-from flask.ext import login
+import flask_login as login
 from functools import wraps
 from google.appengine.api import users
 from flask import redirect, request, abort
