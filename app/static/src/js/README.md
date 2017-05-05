@@ -5,8 +5,8 @@ Attention: `public scripts` are distinguished from `admin scripts`
 
 ### Create a script file for one section
 For every site section creates a file with the same name.
-If it's a pubblic script, place it in `static/src/script`.
-Else if it's an admin script, place it in `static/src/script`.
+If it's a pubblic script, place it in `static/src/js`.
+Else if it's an admin script, place it in `static/src/js/admin`.
 
 The file must have the following structure:
 ```javascript
@@ -17,12 +17,17 @@ window.init_example_section = function() {
 }
 ```
 
-To make work properly the script add the relative init function in the right `script.js` file (admin or public).
+To make work properly the script add the relative init function in the right `main.js` file (admin or public).
 ```javascript
-$(function() {
-	$("html.example_section").each(function() {
-		init_example_section()
-	})
+$(function () {
+	/*
+	 * Template:
+	 *
+	 * $('html.example_section').each(function () {
+	 * 	// call initialization function
+	 * 	init_example_section()
+	 * });
+	 */
 });
 
 ```

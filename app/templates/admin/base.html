@@ -3,7 +3,7 @@
 {% block title %}{% block subtitle %} {% endblock%} - Admin - {% endblock%}
 
 {% block css_admin %}
-		<link href="/static/min/css/admin/style.css" rel="stylesheet">
+	<link href="/static/min/css/admin/style.css?v={{ SITE_VERSION }}" rel="stylesheet">
 {% endblock %}
 
 
@@ -15,6 +15,6 @@
 {%- endblock %}
 
 {% block js_admin %}
-		<script src="/static/min/js/admin/all.js"></script>
+	<script src="/static/min/js/admin/all.js?v={{ SITE_VERSION }}"></script>
 {% endblock %}
 

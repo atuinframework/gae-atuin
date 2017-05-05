@@ -137,6 +137,9 @@ class User(ndb.Model):
 		self.name_searchable = list(ns)
 		
 
+	@property
+	def prefix_descr(self):
+		return self.prefixes_d.get(self.prefix, '')
 
 	
 	
