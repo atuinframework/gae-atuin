@@ -1,1 +1,0 @@
-console.log(_t("js_placeholder"));
