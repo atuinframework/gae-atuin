@@ -13,4 +13,3 @@ SITE_TITLE = "GAE-ATUIN"
 # multilanguage support
 MULTILANGUAGE = False
 MULTILANGUAGE_LANGS = ['en', 'it']
-

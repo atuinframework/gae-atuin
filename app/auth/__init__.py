@@ -1,4 +1,4 @@
-# - coding: utf-8 -
+# -*- coding: utf-8 -*-
 """
 
 With help from the original decorators.py from https://github.com/kamalgill/flask-appengine-template/blob/master/src/application/decorators.py
@@ -24,5 +24,14 @@ def gae_admin_required(func):
         return redirect(users.create_login_url(request.url))
     return decorated_view
 
-
-
+# @xcash TODO make decorator to accept a list of roles
+def login_role_required(role):
+	"""Require specific role"""
+	def real_decorator(func):
+		@wraps(func)
+		def decorated_view(*args, **kwargs):
+			if current_user.is_authenticated and current_user.role == role:
+				return func(*args, **kwargs)
+			abort(403)
+		return decorated_view
+	return real_decorator

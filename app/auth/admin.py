@@ -1,78 +1,99 @@
-# - coding: utf-8 -
+# -*- coding: utf-8 -*-
 import datetime
 from flask.blueprints import Blueprint
-from flask import render_template, jsonify, flash, request, session, redirect, url_for
+from flask import render_template, jsonify, flash, request, session, redirect, url_for, abort
 
-from auth import login_required, current_user
+from auth import login_required, login_role_required, current_user
 
 bp = Blueprint('auth.admin', __name__)
 
-from models import User
+from models import ndb, User
+
+from forms import UserFormAdmin
 
 @bp.route("/users")
-@login_required
+@login_role_required("ADMIN")
 def users_index():
-	users = User.query.order_by(User.name).all()
-	usertypes = User.usertypes_d
+	user_list = User.query().order(User.name)
 	userroles = User.roles_d
+	umform = UserFormAdmin()
 	
-	return render_template("auth/admin/users.html", menuid='admin', submenuid='users', users=users, usertypes=usertypes, userroles=userroles)
+	return render_template("auth/admin/users.html", menuid='users', user_list=user_list, umform=umform, userroles=userroles)
 
 
-@bp.route("/users/<int:userid>")
-@login_required
-def users_get(userid):
-	user = User.query.get_or_404(userid)
-	user_d = {
-		'id': user.id,
-		'usertype': user.usertype,
-		'username': user.username,
-		'name': user.name,
-		'notes': user.notes,
-		'role': user.role,
-	}
-	if user.last_login:
-		user_d['last_login'] = user.last_login.ctime()
-	else:
-		user_d['last_login'] = None
+@bp.route("/users/<userkey>")
+@login_role_required("ADMIN")
+def users_get(userkey):
+	user = User.get_by_key(userkey)
+	if not user:
+		abort(404)
+	
+	user_d = user.to_dict(exclude=['password', 'logo_image'])
 	
 	return jsonify(user_d)
 
 
-@bp.route("/users/save", methods=['POST'])
-@bp.route("/users/<int:userid>", methods=['POST'])
-@login_required
-def users_save(userid=None):
-	if not request.form.get('usertype') or not request.form.get('username') or not request.form.get('role'):
-		return 'MISSING_PARAMETERS', 400
-	
-	if userid:
-		#edit user
-		user = User.query.get_or_404(userid)
-	else:
-		#new user
-		user = User()
-		
-	user.usertype = request.form['usertype']
-	user.username = request.form['username']
-	user.name = request.form['name']
-	user.notes = request.form['notes']
-	user.role = request.form['role']
-	
-	if request.form['password'] != '':
-		user.set_password(request.form['password'])
-		
-	db.session.add(user)
-	db.session.commit()
-	
-	flash(u'User %s saved' % user.username)
-	return redirect(url_for('auth.admin.users_index'))
+@bp.route("/user")
+@login_role_required("ADMIN")
+def search_user():
+	res = []
 
-@bp.route("/users/<int:userid>", methods=['DELETE'])
-@login_required
-def users_delete(userid):
-	user = User.query.get_or_404(userid)
-	db.session.delete(user)
-	db.session.commit()
-	
+	search = request.args.get('q', '').strip().lower()
+
+	if search:
+		users = User.query().filter(User.name_searchable == search).fetch(30)
+
+		for u in users:
+			usr = {}
+			usr['id'] = u.key.urlsafe()
+			usr['name'] = u.name
+			usr['surname'] = u.surname
+			usr['company_name'] = u.company_name
+			usr['username'] = u.username
+			usr['admin_mail'] = u.admin_mail
+			usr['sales_mail'] = u.sales_mail
+			res.append(usr)
+
+	return jsonify(results=res)
+
+
+@bp.route("/users/", methods=['POST'])
+@bp.route("/users/<userkey>", methods=['POST'])
+@login_role_required("ADMIN")
+def users_save(userkey=None):
+	# form validation
+	form = UserFormAdmin()
+	if form.validate_on_submit():
+		if userkey:
+			#edit user
+			user = User.get_by_key(userkey)
+			if not user:
+				abort(404)
+		else:
+			#new user
+			user = User()
+			
+		user.username = form.username.data
+		user.name = form.name.data
+		user.surname = form.surname.data
+		user.notes = form.notes.data
+		user.role = form.role.data
+		
+		if form.password.data != '':
+			user.set_password(form.password.data)
+		
+		user.put()
+		
+		flash(u'User %s saved' % user.username)
+		user_d = user.to_dict(exclude=['password', 'logo_image'])
+		
+		return jsonify(user_d)
+	else:
+		print form.errors
+		return "VALIDATION_ERROR", 400
+
+@bp.route("/users/<userkey>", methods=['DELETE'])
+@login_role_required("ADMIN")
+def users_delete(userkey):
+	ndb.Key(urlsafe=userkey).delete()
 	return 'OK'
