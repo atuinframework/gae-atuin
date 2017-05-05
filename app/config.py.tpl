@@ -1,4 +1,4 @@
-# - coding: utf-8 -
+# -*- coding: utf-8 -*-
 # Configuration template file. Copy it to config.py
 
 # True to print all queries and autoreload
@@ -12,4 +12,7 @@ SITE_TITLE = "GAE-ATUIN"
 
 # multilanguage support
 MULTILANGUAGE = False
-MULTILANGUAGE_LANGS = ['en', 'it']
+MULTILANGUAGE_LANGS = ['en'] # , 'es', 'it']
+
+# HTTPS
+FORCE_HTTPS = True

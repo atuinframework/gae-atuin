@@ -18,4 +18,3 @@ mounts = [
 	
 	('/', js_translations.views),
 ]
-

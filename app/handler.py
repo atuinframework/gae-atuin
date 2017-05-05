@@ -9,7 +9,7 @@ if DEVSERVER:
 	file, pathname, description =  imp.find_module('_ctypes')
 	imp.load_module('_ctypes', file, pathname, description)
 
-from flask import Flask, g, request, session, url_for
+from flask import Flask, g, request, session, url_for, redirect
 from werkzeug.routing import BuildError
 from flask_caching import Cache
 from flask_babel import Babel, get_locale as babel_get_locale
@@ -104,6 +104,7 @@ def inject_custom():
 			'SITE_VERSION': version.string,
 			'SITE_VERSION_DATE': version.date_string,
 			'SITE_VERSION_FULL': version.full_string,
+			'MULTILANGUAGE': settings.MULTILANGUAGE,
 			'lurl_for': g.lurl_for,
 			'users': auth.users,
 			'current_user': auth.current_user,
@@ -112,6 +113,13 @@ def inject_custom():
 		}
 	return d
 
+if not DEVSERVER:
+	@app.before_request
+	def https_check():
+		if request.url.startswith('http://'):
+			url = request.url.replace('http://', 'https://', 1)
+			code = 301
+			return redirect(url, code=code)	
 
 for (mount_position, mount_module) in settings.mounts:
 	app.register_blueprint(mount_module.bp, url_prefix=mount_position)

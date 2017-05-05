@@ -7,14 +7,14 @@
 			<ul class="nav nav-pills pull-right">
 				{% if current_user.is_authenticated %}
 					<li {% if menid == 'admin' %}class="active"{% endif %}>
-						<a href="{{ url_for('admin.index') }}" title="Admin Area">Admin</a>
+						<a href="{{ url_for('admin.index') }}" title="{{ _('Admin Area') }}">{{ _('Admin') }}</a>
 					</li>
 					<li>
-						<a href="{{ lurl_for('auth.logout') }}" title="Disconnect">Logout {{ current_user.name }}</a>
+						<a href="{{ lurl_for('auth.logout') }}" title="{{ _('Disconnect') }}">{{ _('Logout') }} {{ current_user.name }}</a>
 					</li>
 				{% else %}
 					<li>
-						<a href="{{ lurl_for('auth.login') }}" title="Login">Login</a>
+						<a href="{{ lurl_for('auth.login') }}" title="{{ _('Login') }}">{{ _('Login') }}</a>
 					</li>
 				{% endif %}
 			</ul>
@@ -28,7 +28,7 @@
 <div class="footer-wide">
 	<div class="container">
 		<div class="footer">
-			<small>&copy; <span class="brand">WEBSITE</span></small>
+			<small>&copy; <span class="brand">{{ _('WEBSITE') }}</span></small>
 		</div>
 	</div>
 </div>

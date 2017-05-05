@@ -3,9 +3,11 @@ syntax: regexp
 .+\.(py(c|o))$
 .+\.\~$
 ^app/lib
+^app/config.py$
 ^node_modules
 ^tmp
 ^app/static/min
+
 
 syntax: glob
 

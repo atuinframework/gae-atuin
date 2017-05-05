@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """`appengine_config` gets loaded when starting a new application instance."""
 import vendor
 # insert `lib` as a site directory so our `main` module can load
@@ -11,12 +12,12 @@ def webapp_add_wsgi_middleware(app):
 	return app
 
 def gae_mini_profiler_should_profile_production():
-	# from google.appengine.api import users
-	# return users.is_current_user_admin()
-	
 	pass
+	from google.appengine.api import users
+	return users.is_current_user_admin()
 
 
 def gae_mini_profiler_should_profile_development():
 	pass
 	# return True
+	

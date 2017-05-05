@@ -95,5 +95,3 @@ def external_login_google():
 @login_manager.unauthorized_handler
 def unauthorized():
 	return render_template('auth/unauthorized.html', menuid="login", next=request.args.get("next")), 401
-
-
