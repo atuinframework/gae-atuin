@@ -11,7 +11,7 @@ gulp.task(	'run',
 				gulp.src('dev.sh')
 					.pipe($.start( [{
 						match: /dev.sh$/,
-						cmd: 'dev_appserver.py --host=0.0.0.0 --storage_path=tmp/datastore app'
+						cmd: 'dev_appserver.py --host=0.0.0.0 --admin_host=0.0.0.0 --storage_path=tmp/datastore app'
 					}]));
 			}
 );

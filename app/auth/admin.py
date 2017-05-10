@@ -48,10 +48,9 @@ def search_user():
 			usr['id'] = u.key.urlsafe()
 			usr['name'] = u.name
 			usr['surname'] = u.surname
-			usr['company_name'] = u.company_name
 			usr['username'] = u.username
-			usr['admin_mail'] = u.admin_mail
-			usr['sales_mail'] = u.sales_mail
+			usr['email'] = u.email
+			usr['logo_image_url'] = u.logo_image_url
 			res.append(usr)
 
 	return jsonify(results=res)
@@ -63,34 +62,37 @@ def search_user():
 def users_save(userkey=None):
 	# form validation
 	form = UserFormAdmin()
-	if form.validate_on_submit():
-		if userkey:
-			#edit user
-			user = User.get_by_key(userkey)
-			if not user:
-				abort(404)
-		else:
-			#new user
-			user = User()
-			
-		user.username = form.username.data
-		user.name = form.name.data
-		user.surname = form.surname.data
-		user.notes = form.notes.data
-		user.role = form.role.data
-		
-		if form.password.data != '':
-			user.set_password(form.password.data)
-		
-		user.put()
-		
-		flash(u'User %s saved' % user.username)
-		user_d = user.to_dict(exclude=['password', 'logo_image'])
-		
-		return jsonify(user_d)
-	else:
-		print form.errors
+	if not form.validate_on_submit():
 		return "VALIDATION_ERROR", 400
+
+	if userkey:
+		#edit user
+		user = User.get_by_key(userkey)
+		if not user:
+			abort(404)
+	else:
+		#new user
+		user = User()
+		user.ins_timestamp = datetime.datetime.now()
+
+	user.email = form.email.data
+	user.username = form.username.data
+	if form.password.data != '':
+		user.set_password(form.password.data)
+	user.name = form.name.data
+	user.surname = form.surname.data
+	user.notes = form.notes.data
+	user.role = form.role.data
+	user.active = form.active.data
+	user.upd_timestamp = form.upd_timestamp.data
+
+	user.put()
+
+	flash(u'User %s saved' % user.username)
+	user_d = user.to_dict(exclude=['password', 'logo_image'])
+
+	return jsonify(user_d)
+
 
 @bp.route("/users/<userkey>", methods=['DELETE'])
 @login_role_required("ADMIN")

@@ -1,6 +1,10 @@
 /* PUBLIC CSS */
 @import "_variables";
 
+a, a:hover, a:active, a:focus {
+   outline: 0;
+}
+
 @media (max-width: 979px) {
 }
 

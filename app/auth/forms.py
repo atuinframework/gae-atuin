@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from flask_wtf import FlaskForm
-
 from wtforms import StringField, PasswordField, BooleanField, DateTimeField, SelectField, SelectMultipleField, TextAreaField
 from wtforms.validators import DataRequired
 
@@ -26,6 +26,6 @@ class UserFormAdmin(FlaskForm):
 	active = BooleanField()
 	
 	ins_timestamp = DateTimeField()
-	upd_timestamp = DateTimeField()
+	upd_timestamp = DateTimeField(datetime.now())
 	
 	last_login = DateTimeField()

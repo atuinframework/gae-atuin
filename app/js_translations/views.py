@@ -5,6 +5,7 @@ from flask import render_template, make_response
 
 bp = Blueprint('js_translations', __name__)
 
+@bp.route('js_translations.js')
 @bp.route(u'en/js_translations.js', endpoint='index_en')
 def index():
 	resp = make_response(render_template('js_translations/base.js'))

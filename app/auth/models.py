@@ -20,6 +20,7 @@ class User(ndb.Model):
 	password = ndb.StringProperty('pwd', indexed=False)
 	
 	prefix = ndb.StringProperty('px', indexed=False, default='')
+	
 	name = ndb.StringProperty('n', indexed=True, default='')
 	surname = ndb.StringProperty('s', indexed=True, default='')
 	

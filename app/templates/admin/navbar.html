@@ -14,7 +14,7 @@
 		<div class="collapse navbar-collapse" id="admin-navbar">
 			<ul class="nav navbar-nav">
 				<li class="{{ 'active' if submenuid == 'users' }}">
-					<a href="{#{ url_for('auth.admin.users_index') }#}">
+					<a href="{{ url_for('auth.admin.users_index') }}">
 						Users
 					</a>
 				</li>

@@ -40,13 +40,12 @@
 	<body>
 		{% block content %}{% endblock %}
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="https://gitcdn.link/repo/nyxgear/formtools/master/dist/1.1.0/formtools.min.js"></script>
 		{% block foot %}{% endblock %}
-        {%- if MULTILANGUAGE %}
 		<script src="{{ lurl_for('js_translations.index', v=SITE_VERSION) }}"></script>
 		<script>
 			var languages = {{ languages.lang_title|tojson }};
 		</script>
-        {% endif -%}
         <!-- ALL JS -->
 		<script src="/static/min/js/all.js?v={{ SITE_VERSION }}"></script>
 		{% block js %}{% endblock %}

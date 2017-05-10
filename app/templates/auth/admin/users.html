@@ -1,128 +1,60 @@
 {% extends 'admin/base.html' %}
 
+{% set html_classes = 'usersAdmin' %}
+
 {% block subtitle %} - Users {% endblock %}
 
-{% block content_right -%}
-	<h1>Users</h1>
-	
-	{% for message in get_flashed_messages() %}
-		<div class="alert alert-success">
-			{{ message }}
-		</div>
-	{% endfor %}
-
-	<p>
-		<button class="btn btn-small btn-default newUserBtn" data-url="{{ url_for('auth.admin.users_save') }}"><i class="icon-plus-sign"> </i> New User</button>
-	</p>
-	
-	<table class="table">
-		<tbody>
-			{% for user in users %}
-				<tr>
-					<td>
-						<a href="{{ url_for('auth.admin.users_get', userid=user.id) }}" data-url="{{ url_for('auth.admin.users_save', userid=user.id) }}" class="modUser">{{ user.name }} {{ user.username }}</a>
-					</td>
-					<td>
-						{{ user.usertype_translated() }}
-					</td>
-					<td>
-						{{ user.role_translated() }}
-					</td>
-					<td>
-						<button class="btn btn-danger btn-sm deleteUser" data-url="{{ url_for('auth.admin.users_delete', userid=user.id) }}">Delete</button>
-					</td>
-				</tr>
+{% block contentbody %}
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">Users</div>
+		<div class="panel-body">
+			{% for message in get_flashed_messages() %}
+				<div class="alert alert-success">
+					{{ message }}
+				</div>
 			{% endfor %}
-		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="4">
-					<small>{{ users|count }} users</small>
-				</td>
-			</tr>
-		</tfoot>
-	</table>
-	
-	<div id="UserModal" class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Create or modify user</h4>
-				</div>
-				<div class="modal-body">
-					<form id="umForm" class="form-horizontal" action="" method="post">
-						<div class="form-group">
-							<label class="col-md-3 control-label">User type *</label>
-							<div class="col-md-9">
-								{% for (typeid, typedesc) in usertypes.iteritems() %}
-									<label class="radio-inline">
-										<input type="radio" name="usertype" value="{{ typeid }}"> {{ typedesc }}
-									</label>
-								{% endfor %}
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="col-md-3 control-label">Name/description</label>
-							<div class="col-md-9">
-								<input type="text" class="form-control" id="inputName" name="name" placeholder="">
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="col-md-3 control-label">Username *</label>
-							<div class="col-md-9">
-								<input type="text" class="form-control" id="inputUsername" name="username" placeholder="unique username">
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="col-md-3 control-label">Password</label>
-							<div class="col-md-9">
-								<div class="row">
-									<div class="col-md-6">
-										<input type="password" class="form-control" id="inputPassword" name="password" placeholder="">
-									</div>
-									<div class="col-md-6">
-										<input type="password" class="form-control" id="inputPasswordConfirm" placeholder="retype password">
-									</div>
-								</div>
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="col-md-3 control-label">Notes</label>
-							<div class="col-md-9">
-								<textarea class="form-control" id="inputNotes" name="notes"></textarea>
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="col-md-3 control-label">Role *</label>
-							<div class="col-md-9">
-								<select class="form-control" id="inputRole" name="role">
-								{% for (roleid, roledesc) in userroles.iteritems() %}
-									<option value="{{ roleid }}">{{ roledesc }}</option>
-								{% endfor %}
-								</select>
-							</div>
-						</div>
-						
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary saveBtn">Save</button>					
-				</div>
-			</div>
+			<p>
+				<button class="btn btn-small btn-default newUserBtn" data-url="{{ url_for('auth.admin.users_save') }}"><i class="fa fa-plus"> </i> New User</button>
+			</p>
+			<table class="table">
+				<tbody>
+					{% for user in user_list %}
+						<tr>
+							<td>
+								<a href="{{ url_for('auth.admin.users_get', userkey=user.key.urlsafe()) }}" data-url="{{ url_for('auth.admin.users_save', userkey=user.key.urlsafe()) }}" class="modUser">
+                                    {{ user.name }} {{ user.surname }} - {{ user.username }}
+								</a><br>
+								{{ user.company_name }}<br>
+								<small>
+									{% for ai in user.auth_ids %}
+										{% if ai.startswith('google_') %}
+											Logged in using <span class="fa fa-google"></span>oogle
+										{% endif %}
+									{% endfor %}
+								</small>
+							</td>
+							<td>
+								{{ user.state }}<br>
+								{{ user.spoken_languages|join(',') }}
+							</td>
+							<td>
+								{{ user.company_type }}<br>
+								{{ user.role_translated() }}<br>
+								<small>last login {{ user.last_login.strftime("%d/%m/%Y %H:%M:%S") }}</small>
+							</td>
+							<td class="text-right">
+								<button class="btn btn-danger btn-sm deleteUser" data-url="{{ url_for('auth.admin.users_delete', userkey=user.key.urlsafe()) }}">Delete</button>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
 		</div>
 	</div>
+</div>
 
-{%- endblock %}
+{% include 'auth/admin/modal_user.html' %}
 
-
-{% block foot -%}
-	<script src="/static/js/admin/users.js"></script>
-{%- endblock %}
+{% endblock %}
 
