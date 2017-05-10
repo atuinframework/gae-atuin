@@ -104,7 +104,6 @@ def inject_custom():
 			'SITE_VERSION': version.string,
 			'SITE_VERSION_DATE': version.date_string,
 			'SITE_VERSION_FULL': version.full_string,
-			'MULTILANGUAGE': settings.MULTILANGUAGE,
 			'lurl_for': g.lurl_for,
 			'users': auth.users,
 			'current_user': auth.current_user,

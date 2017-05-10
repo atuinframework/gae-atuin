@@ -1,14 +1,3 @@
-# https://cloud.google.com/appengine/docs/standard/python/config/appref
-# "The recommended approach is to remove the application element from your app.yaml file and instead,
-# use a command-line flag to specify your application ID:
-#     gcloud app deploy --project [YOUR_PROJECT_ID]
-# "
-#
-# "The recommended approach is to remove the version element from your app.yaml file and instead,
-# use a command-line flag to specify your version ID:
-#     gcloud app deploy -v [YOUR_VERSION_ID]
-# "
-# version: 1
 runtime: python27
 api_version: 1
 threadsafe: true
