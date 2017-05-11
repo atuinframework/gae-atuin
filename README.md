@@ -82,6 +82,3 @@ Flask-Babel is fully supported. [Official documentation](http://pythonhosted.org
  - `form_nameofcontent.html` `modal_nameofcontent.html` the content type of the file is a prefix
 
 ## TODO
-
- * Authentication abstractions
- * Cache abstractions
