@@ -1,0 +1,17 @@
+version: '2'
+services:
+  devenv:
+    image: nyxger/gae-atuin-devenv
+    ports:
+     - "8080:8080"   # default module
+     - "8000:8000"   # admin server
+    volumes:
+     - ./app:/workspace
+     - data-volume:/data-volume
+    command: >
+      bash -c "cd /workspace &&
+      dev_appserver.py --host=0.0.0.0 --storage_path=/data-volume app.yaml"
+
+
+volumes:
+  data-volume:
