@@ -1,18 +1,14 @@
 syntax: regexp
-
 .+\.(py(c|o))$
 .+\.\~$
 ^app/lib
 ^app/config.py$
-^node_modules
-^tmp
 ^app/static/min
 
 
 syntax: glob
-
+*~
 Thumbs.db
 .DS_Store
-*.komodoproject
 
 # Project specific
