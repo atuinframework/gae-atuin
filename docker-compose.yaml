@@ -3,18 +3,24 @@ services:
   devenv:
     image: nyxgear/gae-atuin-devenv
     ports:
-     - "8080:8080"   # default module
-     - "8000:8000"   # admin server
+     - "8080:8080"   # default module port
+     - "8000:8000"   # admin server port
     volumes:
      - ./app:/workspace
      - data-volume:/data-volume
     command: >
       bash -c "cd /workspace &&
-      dev_appserver.py --host=0.0.0.0 --storage_path=/data-volume app.yaml"
+      dev_appserver.py \
+        --host=0.0.0.0 \
+        --admin_host=0.0.0.0 \
+        --storage_path=/data-volume \
+      app.yaml"
   tools:
     image: scalebox/atuin-gulp
     volumes:
       - ./app:/workspace/app
+      - ./babel.cfg:/workspace/babel.cfg
+      - ./requirements.txt:/workspace/requirements.txt
 
 volumes:
   data-volume:
