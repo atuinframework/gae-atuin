@@ -48,13 +48,10 @@ When you run for the first time the GAE Atuin framework environment you have to 
 To do this, as the tasks to manage translations, you have to connect to the `atuin-tools` container.
 
 1. With the development environment running, connect to the tools container.
-
 ```bash
 docker exec -it gaeatuin_tools_1 sh
 ```
-
 2. Then, use pip through the dedicated Gulp task to update them.
-
 ```bash
 # To get the Gulp help
 gulp
@@ -73,11 +70,9 @@ Flask-Babel is fully supported. [Official documentation]
 #### To manage project translations:
 
 1. With the development environment running, connect to the tools container.
-
 ```bash
 docker exec -it gaeatuin_tools_1 sh
 ```
-
 2. Many gulp tasks are available to extract, initialize, update and compile the project translated word.
 
 ```bash
