@@ -1,4 +1,4 @@
-# GAE - Flask - Atuin
+# GAE Atuin v2 - A Flask web application skeleton.
 
 This is the Google AppEngine version of [Atuin], a [Scalebox]'s Flask web application skeleton.
 
