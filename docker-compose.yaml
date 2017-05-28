@@ -16,10 +16,10 @@ services:
         --storage_path=/data-volume \
       app.yaml"
   tools:
-    image: scalebox/atuin-gulp
+    image: scalebox/atuin-gulp:v2
     volumes:
       - ./app:/workspace/app
-      - ./babel.cfg:/workspace/babel.cfg
+      - ./config:/workspace/config
       - ./requirements.txt:/workspace/requirements.txt
 
 volumes:
