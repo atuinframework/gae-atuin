@@ -1,0 +1,170 @@
+{% extends 'atuin/admin/base.html' %}
+
+{% set html_classes="admin users" %}
+
+{% block subtitle %} - Users {% endblock %}
+
+{% block contentbody -%}
+	<div class="container">
+		
+		<h1 class="page-header">Users</h1>
+		
+		{% for message in get_flashed_messages() %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+	
+		<div class="row" style="margin-bottom: 10px">
+			<div class="col-md-6">
+				<button class="btn btn-small btn-default newUserBtn" data-url="{{ url_for('atuin.auth.admin.users_save') }}"><i class="icon-plus-sign"> </i> New User</button>
+			</div>
+			<div class="col-md-6 text-right">
+				<div class="input-group">
+					<input type="search" id="userListSearch" class="form-control" placeholder="Cerca..." autocomplete="off">
+					<span class="input-group-btn">
+						<button type="button" class="btn btn-primary" id="btnUserListSearch"><i class="fa fa-search"></i></button>
+					</span>
+				</div>
+			</div>
+		</div>
+		
+		<table class="table">
+			<tbody>
+				{% for user in users %}
+					<tr class="userRow">
+						<td>
+							<a href="{{ url_for('atuin.auth.admin.users_get', userid=user.id) }}"
+							   data-url="{{ url_for('atuin.auth.admin.users_save', userid=user.id) }}"
+							   class="modUser searchable">{{ user.name }} {{ user.username }}</a>
+						</td>
+						<td>
+							{{ user.usertype_translated() }}
+							{% if (user.usertype == 'customer') and (user.active_until) %}
+								<br>
+								<small>Expires: {{ user.active_until.strftime('%d/%m/%Y') }}</small>
+							{% endif %}
+						</td>
+						<td>
+							{{ user.role_translated() }}
+							<br>
+							<small>Last seen: {{ user.last_login.strftime('%d/%m/%Y alle %H:%M') if user.last_login else 'never' }}</small>
+						</td>
+						<td>
+							<button class="btn btn-danger btn-sm deleteUser" data-url="{{ url_for('atuin.auth.admin.users_delete', userid=user.id) }}">Delete</button>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4">
+						<small>{{ users|count }} users</small>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	
+	<div id="UserModal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Create or modify user</h4>
+				</div>
+				<div class="modal-body">
+					<form id="umForm" class="form-horizontal" action="" method="post">
+						<div class="form-group">
+							<label class="col-md-3 control-label">User type *</label>
+							<div class="col-md-9">
+								{% for (typeid, typedesc) in usertypes.iteritems() %}
+									<label class="radio-inline">
+										<input type="radio" name="usertype" value="{{ typeid }}"> {{ typedesc }}
+									</label>
+								{% endfor %}
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">Name/description</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" id="inputName" name="name" placeholder="">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">Username *</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" id="inputUsername" name="username" placeholder="unique username">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">Password</label>
+							<div class="col-md-9">
+								<div class="row">
+									<div class="col-md-6">
+										<input type="password" class="form-control" id="inputPassword" name="password" placeholder="">
+									</div>
+									<div class="col-md-6">
+										<input type="password" class="form-control" id="inputPasswordConfirm" placeholder="retype password">
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">email</label>
+							<div class="col-md-9">
+								<div class="row">
+									<div class="col-md-12">
+										<input type="text" class="form-control" id="inputEmail" name="email" placeholder="example@mail.it">
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">Notes</label>
+							<div class="col-md-9">
+								<textarea class="form-control" id="inputNotes" name="notes"></textarea>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">Role *</label>
+							<div class="col-md-9">
+								<select class="form-control" id="inputRole" name="role">
+								{% for (roleid, roledesc) in userroles.iteritems() %}
+									<option value="{{ roleid }}">{{ roledesc }}</option>
+								{% endfor %}
+								</select>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-md-3 control-label">Birthday</label>
+							<div class="col-md-3">
+								<input type="text" class="form-control" id="inputBirthday" name="birthday" placeholder="dd/mm/yyyy">
+							</div>
+							<div class="col-md-3">
+								<select class="form-control" id="inputGender" name="gender">
+									<option value="m">Male</option>
+									<option value="f">Female</option>
+								</select>
+							</div>
+						</div>
+						
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-primary saveBtn">Save</button>					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+{%- endblock %}
+

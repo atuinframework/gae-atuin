@@ -1,0 +1,24 @@
+{% extends 'atuin/base.html' %}
+
+{% block title %}{% block subtitle %} {% endblock%} - Admin - {% endblock%}
+
+{% block css_admin %}
+		<link href="/static/min/css/admin/atuin.css?v={{ SITE_VERSION }}" rel="stylesheet">
+		<link href="/static/min/css/admin/style.css?v={{ SITE_VERSION }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content -%}
+	{% include 'atuin/admin/navbar.html' %}
+	
+	{% block contentbody %}{% endblock %}
+
+
+	{% include 'atuin/admin/modal_alert.html' %}
+
+{%- endblock %}
+
+{% block js_admin %}
+		<script src="/static/min/js/admin/atuin.js?v={{ SITE_VERSION }}"></script>
+		<script src="/static/min/js/admin/all.js?v={{ SITE_VERSION }}"></script>
+{% endblock %}

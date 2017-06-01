@@ -1,0 +1,23 @@
+{% for message in get_flashed_messages() %}
+	<div class="alert alert-danger">
+		<strong>Error!</strong> {{ message }}
+	</div>
+{% endfor %}
+<form class="form-horizontal" action="{{ url_for('atuin.auth.login') }}" id="loginForm" method="post">
+  <div class="form-group">
+    <label class="col-lg-3 control-label" for="inputUsername">Email</label>
+    <div class="col-lg-9">
+      <input class="form-control" type="text" id="inputUsername" name="username" placeholder="Username">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-lg-3 control-label" for="inputPassword">Password</label>
+    <div class="col-lg-9">
+      <input class="form-control" type="password" id="inputPassword" name="password" placeholder="Password">
+    </div>
+  </div>
+</form>
+
+<script>
+	$('#loginForm input[name=username]').focus();
+</script>

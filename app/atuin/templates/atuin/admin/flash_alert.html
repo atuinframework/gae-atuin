@@ -1,0 +1,16 @@
+
+
+	{% for category, message in get_flashed_messages(with_categories=true) %}
+		{% if category != "message" %}
+		<div class="alert alert-{{category}}" role="alert">
+		{% else %}
+		<div class="alert alert-success" role="alert">
+		{% endif %}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<i class="fa fa-warning" aria-hidden="true"></i>
+			{{ message | safe}}
+		</div>
+	{% endfor %}
+
+
+

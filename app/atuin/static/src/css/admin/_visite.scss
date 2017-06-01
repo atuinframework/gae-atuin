@@ -1,0 +1,43 @@
+
+
+.headerPar {
+	border-bottom: 2px solid #F3F3F3;
+
+}
+
+table {
+	thead {
+		&.thead-inverse {
+			background-color : #000000 !important;
+			color : $title-color;
+		}
+	}
+	
+	tr {
+		td {
+			&.inputCell {
+				vertical-align: middle;
+			}
+		}
+	}
+}	
+
+textarea{
+	&.no-resize {
+		resize: none;
+	}
+}
+
+i {
+	&.fa-invisible {
+		visibility: hidden;
+	}
+}
+
+a {
+	&.editNominativo,
+	&.showIdoneita {
+		font-size: 18px;
+		color: inherit;
+	}
+}
