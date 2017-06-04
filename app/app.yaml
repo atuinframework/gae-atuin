@@ -54,3 +54,4 @@ skip_files:
 - ^(.*/)?Icon\r
 - ^static/src
 - ^.*\.po[t]
+- ^.*requirements\.txt
