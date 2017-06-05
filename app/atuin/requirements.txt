@@ -10,4 +10,3 @@ flask-caching
 Markdown
 passlib
 requests
-Werkzeug
