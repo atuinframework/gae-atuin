@@ -49,7 +49,7 @@ To do this, as the tasks to manage translations, you have to connect to the `atu
 
 1. With the development environment running, connect to the tools container.
 ```bash
-docker exec -it gaeatuin_tools_1 sh
+docker exec -it tools sh
 ```
 2. Then, use pip through the dedicated Gulp task to update them.
 ```bash
@@ -60,7 +60,7 @@ gulp
 gulp update
 ```
 
-Each time you will change the `requirements.txt` file remember also to run this update task.
+Each time you change the `requirements.txt` file don't forget to run this update task.
 
 
 ## Translations
@@ -71,7 +71,7 @@ Flask-Babel is fully supported. [Official documentation]
 
 1. With the development environment running, connect to the tools container.
 ```bash
-docker exec -it gaeatuin_tools_1 sh
+docker exec -it tools sh
 ```
 2. Many gulp tasks are available to extract, initialize, update and compile the project translated word.
 
@@ -95,29 +95,12 @@ gulp translations[:extract|:update|:compile|:init]
 5. Minify, uglify and compress (production mode) the project's static files:
 
 ```bash
-docker-compose run --rm atuin-tools gulp prepare-deploy
+docker-compose run tools gulp prepare-deploy
 ```
 
-### Deploy through `google/cloud-sdk` container
+### Deploy 
 
-Before you start you should have the `glcoud-config` container among your local containers.
-It's required to let the `devenv` container authenticate to you Google Cloud console. [Reference here].
-
-To create it:
-```bash
-docker run -t -i --name gcloud-config google/cloud-sdk gcloud init
-```
-
-then, simply enter in the `devenv` container:
-```bash
-docker run --rm -ti --volumes-from gcloud-config -v $PWD:/workspace google/cloud-sdk bash
-```
-
-and do the deploy through `gcloud` utility:
-```bash
-gcloud app deploy --project=<project-id> workspace/app/app.yaml
-```
-
+[TODO docs]
 
 ## Code conventions
  - `Admin` `_admin` at the end of name for admin variables
@@ -126,5 +109,4 @@ gcloud app deploy --project=<project-id> workspace/app/app.yaml
 
 [Atuin]: https://bitbucket.org/account/user/scalebox/projects/ATUIN
 [Scalebox]: http://www.scalebox.it/
-[Reference here]: https://hub.docker.com/r/google/cloud-sdk/
 [Official documentation]: http://pythonhosted.org/Flask-Babel/
