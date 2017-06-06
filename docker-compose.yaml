@@ -8,6 +8,7 @@ services:
     volumes:
      - ./app:/workspace
      - data-volume:/data-volume
+     - gcloud-config:/root/.config/gcloud
     command: >
       bash -c "cd /workspace &&
       dev_appserver.py \
@@ -22,4 +23,5 @@ services:
       - ./config:/workspace/config
 
 volumes:
+  gcloud-config:
   data-volume:

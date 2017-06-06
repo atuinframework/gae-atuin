@@ -98,9 +98,25 @@ gulp translations[:extract|:update|:compile|:init]
 docker-compose run tools gulp prepare-deploy
 ```
 
-### Deploy 
+### Deploy
 
 [TODO docs]
+
+1. To do the deploy use the `devenv` container.
+```bash
+$ docker-compose run --rm devenv bash
+```
+
+2. Authenticate with your account.
+```bash
+# gcloud auth login 'ACCOUNT'
+```
+
+3. Deploy the project.
+```bash
+# gcloud app deploy --project=<project-id> workspace/app/app.yaml
+```
+
 
 ## Code conventions
  - `Admin` `_admin` at the end of name for admin variables
