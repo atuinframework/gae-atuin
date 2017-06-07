@@ -71,7 +71,7 @@ Flask-Babel is fully supported. [Official documentation]
 
 1. With the development environment running, connect to the tools container.
 ```bash
-docker exec -it tools sh
+docker-compose exec tools sh
 ```
 2. Many gulp tasks are available to extract, initialize, update and compile the project translated word.
 
@@ -104,7 +104,7 @@ docker-compose run tools gulp prepare-deploy
 
 1. To do the deploy use the `devenv` container.
 ```bash
-$ docker-compose run --rm devenv bash
+$ docker-compose run devenv bash
 ```
 
 2. Authenticate with your account.
