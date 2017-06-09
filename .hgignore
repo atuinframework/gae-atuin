@@ -2,7 +2,7 @@ syntax: regexp
 .+\.(py(c|o))$
 .+\.\~$
 ^app/lib
-^app/config.py$
+atuin/config.py$
 ^app/static/min
 
 
