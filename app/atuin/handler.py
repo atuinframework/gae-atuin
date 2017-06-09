@@ -121,7 +121,7 @@ def inject_custom():
 	return d
 
 
-if not DEVSERVER:
+if not DEVSERVER and settings.FORCE_HTTPS:
 	@app.before_request
 	def https_check():
 		if request.url.startswith('http://'):
