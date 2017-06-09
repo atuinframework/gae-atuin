@@ -1,18 +1,20 @@
-#public site imports
+# -*- coding: utf-8 -*-
+# public site imports
 import home.views
 
-#admin & auth
-import auth.views, auth.admin
-import admin.views
+import js_translations.views
 
+# admin site imports
+import auth.views, auth.admin
+import admin.admin
 
 mounts = [
 	('/', home.views),
 	
 	('/auth', auth.views),
 	
-	('/admin', admin.views),
+	('/admin', admin.admin),
 	('/admin/auth', auth.admin),
-
-
+	
+	('/', js_translations.views),
 ]
