@@ -1,4 +1,4 @@
-# - coding: utf-8 -
+# -*- coding: utf-8 -*-
 
 lang_title_l = [
 	('it', 'Italiano'),
@@ -9,4 +9,3 @@ lang_title_l = [
 ]
 
 lang_title = dict(lang_title_l)
-
