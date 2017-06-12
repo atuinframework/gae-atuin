@@ -5,13 +5,16 @@ import hashlib
 import collections
 
 from passlib.hash import sha256_crypt
+from flask_babel import lazy_gettext
 from atuin.mailing import send_mail
 
-from atuin.datastore import db, hybrid_property, backref
+from google.appengine.ext import ndb, blobstore
+from google.appengine.api import images as gapi_images
+from utils import update_searchable_set
+from permission_policies import user_role_polices, role_policy_functions
 
 
 class classproperty_get(property):
-
 	_get_funct = None
 
 	def __init__(self, get_funct=None, *void):
@@ -20,70 +23,67 @@ class classproperty_get(property):
 	def __get__(self, void=None, cls=None):
 		return self._get_funct(cls)
 
-class User(db.Model):
-	__tablename__ = 'users'
 
-	id = db.Column(db.Integer, primary_key=True)
-	public_id = db.Column(db.Integer, index=True)
-	usertype = db.Column(db.String(10))
-	username = db.Column(db.String(80), unique=True, index=True)
-	password = db.Column(db.String(255))
-	email = db.Column(db.String(100))
-	name = db.Column(db.String(200))
-	notes = db.Column(db.Text)
-	role = db.Column(db.String(50), index=True)
+class User(ndb.Model):
+	role = ndb.StringProperty('r', required=True, default='GUEST')
+	active = ndb.BooleanProperty('a', default=False)
+	auth_ids = ndb.StringProperty('ai', repeated=True)
 
-	birthday = db.Column(db.Date)
-	gender = db.Column(db.String(10))
+	email = ndb.StringProperty('em', indexed=True, default='')
+	username = ndb.StringProperty('un', required=True, indexed=True, default='')
+	_password = ndb.StringProperty('pwd', indexed=False)
 
-	address_city = db.Column(db.String(255))
-	address_zip = db.Column(db.String(10))
-	address_country = db.Column(db.String(30))
+	prefix = ndb.StringProperty('px', indexed=False, default='')
+	name = ndb.StringProperty('n', indexed=True, default='')
+	surname = ndb.StringProperty('s', indexed=True, default='')
+	birthday = ndb.DateProperty('b')
+	gender = ndb.StringProperty('g')
+	address_city = ndb.StringProperty('ac')
+	address_zip = ndb.StringProperty('az')
+	address_country = ndb.StringProperty('ac')
 
-	otp = db.Column(db.String(255), default=None)
-	otp_expire = db.Column(db.DateTime, default=None)
+	logo_image = ndb.BlobKeyProperty('li', indexed=False)
+	logo_image_url = ndb.StringProperty('liu', indexed=False)
 
-	active_until = db.Column(db.DateTime, default=None, index=True)
+	preferences = ndb.PickleProperty('p')
+	notes = ndb.StringProperty(indexed=False)
 
-	ins_timestamp = db.Column(db.DateTime, default=datetime.datetime.now)
-	upd_timestamp = db.Column(db.DateTime, default=datetime.datetime.now)
+	otp = ndb.StringProperty('o', default='', indexed=True)
+	otp_expire = ndb.DateTimeProperty('o_e', auto_now_add=True, indexed=False)
 
-	last_login = db.Column(db.DateTime, default=None)
-	
-	policy = db.relationship('UserPolicy',
-								primaryjoin='User.role==foreign(UserPolicy.role)',
-								uselist=False,
-								viewonly=True,
-								lazy='joined')
+	name_searchable = ndb.StringProperty('ns', repeated=True)
 
-	__table_args__ = ( db.Index('ix_otp_expire_otp', 'otp_expire', 'otp'),
-						)
+	ins_timestamp = ndb.DateTimeProperty('i_ts', auto_now_add=True, indexed=False)
+	upd_timestamp = ndb.DateTimeProperty('u_ts', auto_now_add=True, indexed=False)
 
-	usertypes_d = collections.OrderedDict([
-		('staff', "Staff"),
-		('customer', "Customer"),
-	])
-
-	_roles_d = None
-
-	@classproperty_get
-	def roles_d(self):
-		if not self._roles_d:
-			self._roles_d = dict(UserPolicy.query.with_entities(UserPolicy.role, UserPolicy.desc))
-			self._roles_d["ADMIN"] = "Administrator"
-			
-		return self._roles_d
-		
+	active_until = ndb.DateTimeProperty('au', auto_now_add=True)
+	last_login = ndb.DateTimeProperty('ll', auto_now_add=True)
 
 	def __repr__(self):
-		return "<User %s %s usertype=%s>" % (self.id, self.username, self.usertype)
+		return "<User %s %s role=%s>" % (self.key, self.username, self.role)
 
 	def get_id(self):
-		return self.id
+		return self.key.id()
+
+	def get_urlsafe(self):
+		return self.key.urlsafe()
+
+	@classmethod
+	def get_by_key(cls, k):
+		return ndb.Key(urlsafe=k).get()
+
+	@classmethod
+	def get_by_otp(cls, otp):
+		otp = otp.strip()
+		if otp:
+			c = cls.query(cls.otp == otp).get()
+			if c:
+				if datetime.datetime.now() < c.otp_expire:
+					return c
 
 	@property
 	def is_active(self):
-		return True
+		return self.active
 
 	@property
 	def is_anonymous(self):
@@ -93,23 +93,6 @@ class User(db.Model):
 	def is_authenticated(self):
 		return True
 
-	def set_password(self, password):
-		pwd = sha256_crypt.encrypt(password)
-		self.password = pwd
-
-	def check_password(self, password):
-		if sha256_crypt.verify(password, self.password):
-			# login ok
-			return True
-
-		return False
-
-	def usertype_translated(self):
-		return self.usertypes_d.get(self.usertype, self.usertype)
-
-	def role_translated(self):
-		return self.roles_d.get(self.role, self.role)
-
 	@property
 	def age(self):
 		try:
@@ -117,6 +100,17 @@ class User(db.Model):
 		except:
 			age = 0
 		return int(age)
+
+	def set_password(self, password):
+		pwd = sha256_crypt.encrypt(password)
+		self._password = pwd
+
+	def check_password(self, password):
+		if sha256_crypt.verify(password, self._password):
+			# login ok
+			return True
+
+		return False
 
 	@classmethod
 	def check_otp(cls, otp):
@@ -136,70 +130,84 @@ class User(db.Model):
 
 	def send_email(self, subject, message):
 		res = send_mail(subject, message, [
-			{ 'email': self.username },
+			{'email': self.email},
 		])
 		return res
 
-	def _generate_public_id(self):
-		self.public_id = int( str(self.id) + str(random.randint(1000, 9999)) )
+	@property
+	def role_title(self):
+		return user_role_polices.get(self.role).get('title')
+
+	@property
+	def role_description(self):
+		return user_role_polices.get(self.role).get('description')
+
+	@property
+	def role_functions(self):
+		functions = []
+		if self.role == 'ADMIN':
+			for f in role_policy_functions.itervalues():
+				functions += f
+		else:
+			for p in user_role_polices.get(self.role).get('policies'):
+				functions += role_policy_functions.get(p)
+		return list(set(functions))
 
 	def has_function(self, func):
 		if self.role == 'ADMIN':
 			return True
+		return func in self.role_functions
 
-		if not self.policy:
-			return False
+	def _pre_put_hook(self):
+		ns = set()
+		ns = update_searchable_set(ns, self.name)
+		ns = update_searchable_set(ns, self.surname)
+		ns.add(self.username)
 
-		if not hasattr(self, 'functions'):
-			self.functions = self.policy.functions.split(',')
+		self.name_searchable = list(ns)
 
-		return (func in self.functions)
-
-	def as_dict(self, show=None, hide=None, recurse=None):
-		""" Return a dictionary representation of this model.
-		"""
-
-		obj_d = {
-			'id'				: self.id,
-			'public_id'			: self.public_id,
-			'usertype'			: self.usertype,
-			'username'			: self.username,
-			'name'				: self.name,
-			'notes'				: self.notes,
-			'role'				: self.role,
-			'email'				: self.email,
-			
-			'birthday'			: self.birthday.isoformat() if self.birthday else None,
-			'gender'			: self.gender,
-
-			'address_city'		: self.address_city,
-			'address_zip'		: self.address_zip,
-			'address_country'	: self.address_country,
-
-			'active_until'			: self.active_until.isoformat() if self.active_until else None,
-			'last_login'			: self.last_login.isoformat() if self.last_login else None,
-
-			'ins_timestamp'	: self.ins_timestamp.isoformat() if self.ins_timestamp else None,
-			'upd_timestamp'	: self.upd_timestamp.isoformat() if self.upd_timestamp else None,
-		}
-
-		return obj_d
-
-
-class UserPolicy(db.Model):
-	__tablename__ = 'policies'
-
-	role = db.Column(db.String(50), primary_key=True)
-	desc = db.Column(db.String(150))
-	functions = db.Column(db.Text)
+	@property
+	def prefix_descr(self):
+		return self.prefixes_d.get(self.prefix, self.prefix)
 
 	def as_dict(self, show=None, hide=None, recurse=None):
 		""" Return a dictionary representation of this model.
 		"""
-
 		obj_d = {
-			'role'				: self.role,
-			'functions'			: self.functions,
-		}
+			'key': self.get_urlsafe(),
+			'id': self.get_id(),
 
+			'role': self.role,
+			'role_functions': self.role_functions,
+			'active': self.active,
+			'auth_ids': self.auth_ids,
+
+			'email': self.email,
+			'username': self.username,
+
+			'prefix': self.prefix,
+			'name': self.name,
+			'surname': self.surname,
+			'birthday': self.birthday.isoformat() if self.birthday else None,
+			'gender': self.gender,
+
+			'address_city': self.address_city,
+			'address_zip': self.address_zip,
+			'address_country': self.address_country,
+
+			'logo_image_url': self.logo_image_url,
+			'notes': self.notes,
+
+			'ins_timestamp': self.ins_timestamp.isoformat() if self.ins_timestamp else None,
+			'upd_timestamp': self.upd_timestamp.isoformat() if self.upd_timestamp else None,
+
+			'active_until': self.active_until.isoformat() if self.active_until else None,
+			'last_login': self.last_login.isoformat() if self.last_login else None,
+		}
+		if show:
+			obj_d = {}
+			for s in show:
+				obj_d[s] = getattr(self, s, None)
+		if hide:
+			[obj_d.pop(h, None) for h in hide]
 		return obj_d
