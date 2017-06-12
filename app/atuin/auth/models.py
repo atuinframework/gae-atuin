@@ -14,16 +14,6 @@ from utils import update_searchable_set
 from permission_policies import user_role_polices, role_policy_functions
 
 
-class classproperty_get(property):
-	_get_funct = None
-
-	def __init__(self, get_funct=None, *void):
-		self._get_funct = get_funct
-
-	def __get__(self, void=None, cls=None):
-		return self._get_funct(cls)
-
-
 class User(ndb.Model):
 	role = ndb.StringProperty('r', required=True, default='GUEST')
 	active = ndb.BooleanProperty('a', default=False)
