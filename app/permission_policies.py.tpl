@@ -26,3 +26,5 @@ role_policy_functions = {
 	'policy_2': ['function_1', 'function_2', 'function_3'],
 	'policy_3': ['function_1', 'function_2', 'function_3']
 }
+
+user_roles = user_role_polices.keys()

@@ -13,3 +13,5 @@ user_role_polices = {
 
 role_policy_functions = {
 }
+
+user_roles = user_role_polices.keys()
