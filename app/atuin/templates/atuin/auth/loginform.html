@@ -1,19 +1,19 @@
 {% for message in get_flashed_messages() %}
 	<div class="alert alert-danger">
-		<strong>Error!</strong> {{ message }}
+		<strong>{{ _('Error!') }}</strong> {{ message }}
 	</div>
 {% endfor %}
 <form class="form-horizontal" action="{{ lurl_for('atuin.auth.login') }}" id="loginForm" method="post">
   <div class="form-group">
-    <label class="col-lg-3 control-label" for="inputUsername">Email</label>
+    <label class="col-lg-3 control-label" for="inputUsername">{{ _('Email!') }}</label>
     <div class="col-lg-9">
-      <input class="form-control" type="text" id="inputUsername" name="username" placeholder="Username">
+      <input class="form-control" type="text" id="inputUsername" name="username" placeholder="{{ _('Username!') }}">
     </div>
   </div>
   <div class="form-group">
-    <label class="col-lg-3 control-label" for="inputPassword">Password</label>
+    <label class="col-lg-3 control-label" for="inputPassword">{{ _('Password!') }}</label>
     <div class="col-lg-9">
-      <input class="form-control" type="password" id="inputPassword" name="password" placeholder="Password">
+      <input class="form-control" type="password" id="inputPassword" name="password" placeholder="{{ _('Password!') }}">
     </div>
   </div>
 </form>
