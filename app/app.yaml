@@ -1,6 +1,7 @@
 runtime: python27
 api_version: 1
 threadsafe: true
+service: default
 
 # instances and scaling
 instance_class: F1
@@ -46,7 +47,7 @@ handlers:
   static_dir: static
 
 - url: .*
-  script: handler.app
+  script: atuin.handler.app
 
 skip_files:
 - ^(.*/)?.*\.py[co]
