@@ -21,7 +21,7 @@ class User(ndb.Model):
 
 	email = ndb.StringProperty('em', indexed=True, default='')
 	username = ndb.StringProperty('un', required=True, indexed=True, default='')
-	_password = ndb.StringProperty('pwd', indexed=False)
+	password = ndb.StringProperty('pwd', indexed=False)
 
 	prefix = ndb.StringProperty('px', indexed=False, default='')
 	name = ndb.StringProperty('n', indexed=True, default='')
@@ -93,10 +93,10 @@ class User(ndb.Model):
 
 	def set_password(self, password):
 		pwd = sha256_crypt.encrypt(password)
-		self._password = pwd
+		self.password = pwd
 
 	def check_password(self, password):
-		if sha256_crypt.verify(password, self._password):
+		if sha256_crypt.verify(password, self.password):
 			# login ok
 			return True
 
@@ -159,45 +159,3 @@ class User(ndb.Model):
 	@property
 	def prefix_descr(self):
 		return self.prefixes_d.get(self.prefix, self.prefix)
-
-	def as_dict(self, show=None, hide=None, recurse=None):
-		""" Return a dictionary representation of this model.
-		"""
-		obj_d = {
-			'key': self.get_urlsafe(),
-			'id': self.get_id(),
-
-			'role': self.role,
-			'role_functions': self.role_functions,
-			'active': self.active,
-			'auth_ids': self.auth_ids,
-
-			'email': self.email,
-			'username': self.username,
-
-			'prefix': self.prefix,
-			'name': self.name,
-			'surname': self.surname,
-			'birthday': self.birthday.isoformat() if self.birthday else None,
-			'gender': self.gender,
-
-			'address_city': self.address_city,
-			'address_zip': self.address_zip,
-			'address_country': self.address_country,
-
-			'logo_image_url': self.logo_image_url,
-			'notes': self.notes,
-
-			'ins_timestamp': self.ins_timestamp.isoformat() if self.ins_timestamp else None,
-			'upd_timestamp': self.upd_timestamp.isoformat() if self.upd_timestamp else None,
-
-			'active_until': self.active_until.isoformat() if self.active_until else None,
-			'last_login': self.last_login.isoformat() if self.last_login else None,
-		}
-		if show:
-			obj_d = {}
-			for s in show:
-				obj_d[s] = getattr(self, s, None)
-		if hide:
-			[obj_d.pop(h, None) for h in hide]
-		return obj_d
