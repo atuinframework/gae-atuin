@@ -76,11 +76,11 @@
 				<div class="modal-body">
 					<form id="umForm" class="form-horizontal" action="" method="post">
 						<div class="form-group">
-							<label class="col-md-3 control-label">User type *</label>
+							<label class="col-md-3 control-label">User role *</label>
 							<div class="col-md-9">
-								{% for (typeid, typedesc) in usertypes.iteritems() %}
+								{% for (roleid, role) in user_role_polices.iteritems() %}
 									<label class="radio-inline">
-										<input type="radio" name="usertype" value="{{ typeid }}"> {{ typedesc }}
+										<input type="radio" name="usertype" value="{{ roleid }}"> {{ role['title'] }}
 									</label>
 								{% endfor %}
 							</div>
@@ -129,17 +129,6 @@
 							<label class="col-md-3 control-label">Notes</label>
 							<div class="col-md-9">
 								<textarea class="form-control" id="inputNotes" name="notes"></textarea>
-							</div>
-						</div>
-						
-						<div class="form-group">
-							<label class="col-md-3 control-label">Role *</label>
-							<div class="col-md-9">
-								<select class="form-control" id="inputRole" name="role">
-								{% for (roleid, roledesc) in userroles.iteritems() %}
-									<option value="{{ roleid }}">{{ roledesc }}</option>
-								{% endfor %}
-								</select>
 							</div>
 						</div>
 						

@@ -5,7 +5,7 @@ from wtforms import StringField, PasswordField, BooleanField, DateTimeField, Sel
 from wtforms.validators import DataRequired
 
 from models import User
-
+from permission_policies import user_roles
 
 class LoginForm(FlaskForm):
 	username = StringField(validators=[DataRequired()])
@@ -21,7 +21,7 @@ class UserFormAdmin(FlaskForm):
 	surname = StringField(validators=[DataRequired()])
 	
 	notes = TextAreaField()
-	role = SelectField(choices=list(User.roles_d.iteritems()), validators=[DataRequired()])
+	role = SelectField(choices=user_roles, validators=[DataRequired()])
 	
 	active = BooleanField()
 	
