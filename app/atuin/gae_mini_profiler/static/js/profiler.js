@@ -36,6 +36,19 @@ var GaeMiniProfiler = {
             }
         });
 
+        var oldFetch = window.fetch;
+        window.fetch = function(input, init) {
+            return oldFetch(input, init).then(function(resp) {
+                var requestId = resp.headers.get('X-MiniProfiler-Id');
+                if (requestId) {
+                    var queryString = resp.headers.get('X-MiniProfiler-QS');
+                    GaeMiniProfiler.fetch(requestId, queryString);
+                }
+
+                return resp;
+            });
+        };
+
         GaeMiniProfiler.fetch(requestId, window.location.search, fShowImmediately);
     },
 
@@ -425,8 +438,11 @@ var GaeMiniProfiler = {
         }
     },
 
-    renderPopup: function(data) {
-        if (data.logs) {
+    // TODO(benkraft): right now we call this right before the rendering ops
+    // that need it, and have it just be a no-op the second time.  Instead, we
+    // should ideally do it once, more predictably.
+    summarizeLogs: function(data) {
+        if (data.logs && !data.log_count) {
             var counts = {}
             $.each(data.logs, function(i, log) {
                 var c = counts[log[0]] || 0;
@@ -434,7 +450,10 @@ var GaeMiniProfiler = {
             });
             data.log_count = counts;
         }
+    },
 
+    renderPopup: function(data) {
+        this.summarizeLogs(data);
         return $("#profilerTemplate").tmplPlugin(data);
     },
 
@@ -454,6 +473,8 @@ var GaeMiniProfiler = {
 
     renderCorner: function(data) {
         if (data && data.profiler_results) {
+            this.summarizeLogs(data);
+
             var jCorner = $(".g-m-p-corner");
 
             var fFirst = false;
