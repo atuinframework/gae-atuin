@@ -48,7 +48,7 @@ def login():
 			Log.log_event('LOGIN_PWDERR', "{} from {}".format(u.username, request.remote_addr))
 			flash(_('Unknown username or password'))
 	
-	return render_template('auth/loginpage.html', menuid="login", loginform=login_form, next=request.args.get("next"))
+	return render_template('atuin/auth/loginpage.html', menuid="login", loginform=login_form, next=request.args.get("next"))
 
 
 @bp.route("auth/logout", methods=['GET'])
@@ -98,4 +98,4 @@ def external_login_google():
 
 @login_manager.unauthorized_handler
 def unauthorized():
-	return render_template('auth/unauthorized.html', menuid="login", next=request.args.get("next")), 401
+	return render_template('atuin/auth/unauthorized.html', menuid="login", next=request.args.get("next")), 401
