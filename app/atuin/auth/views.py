@@ -48,7 +48,6 @@ def login():
 @login_required
 def logout():
 	logout_user()
-	session.pop('table_id', None)
 	return redirect(request.args.get("next") or '/')
 
 
