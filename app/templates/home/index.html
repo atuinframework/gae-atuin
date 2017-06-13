@@ -1,6 +1,22 @@
-{% extends 'base-nav.html' %}
+{% extends 'atuin/base.html' %}
 
-{% block contentbody %}
-<h1 class="text-center">{{ _('Welcome to Atuin') }}</h1>
-<img class="img-responsive" src="/static/min/img/great-atuin.jpg" style="width:100%">
+{% block content %}
+
+<div class="row" style="margin-top:20%">
+	<div class="col-md-4 col-md-offset-4">
+		<h3>Custom Home Page</h3>
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				{{ _('ATUIN Flask Web Framework') }}
+			</div>
+			<div class="panel-body">
+				{% include 'atuin/auth/loginform.html' %}
+			</div>
+			<div class="panel-footer">
+				<button class="btn btn-block btn-primary btnLogin" autocomplete="off">Login</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 {% endblock %}

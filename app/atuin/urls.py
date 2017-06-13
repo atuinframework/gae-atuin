@@ -2,20 +2,18 @@
 # public site imports
 import home.views
 
-import js_translations.views
+import atuin.js_translations.views
 
 # admin site imports
 import atuin.auth.views, atuin.auth.admin
-import admin.admin
 
 mounts = [
 	('/', home.views),
-	
-	('/', atuin.auth.views),
-	
-	('/admin', admin.admin),
-	('/admin/auth', atuin.auth.admin),
-	
-	('/', js_translations.views),
-]
 
+	('/', atuin.auth.views),
+
+	# ATUIN
+	('/admin/auth', atuin.auth.admin),
+	('/', atuin.js_translations.views),
+
+]
