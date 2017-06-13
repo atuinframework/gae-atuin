@@ -12,6 +12,7 @@ services:
     command: >
       bash -c "cd /workspace &&
       dev_appserver.py \
+        -A gae-atuin \
         --host=0.0.0.0 \
         --admin_host=0.0.0.0 \
         --storage_path=/data-volume \
