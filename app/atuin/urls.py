@@ -5,16 +5,17 @@ import home.views
 import js_translations.views
 
 # admin site imports
-import auth.views, auth.admin
+import atuin.auth.views, atuin.auth.admin
 import admin.admin
 
 mounts = [
 	('/', home.views),
 	
-	('/auth', auth.views),
+	('/', atuin.auth.views),
 	
 	('/admin', admin.admin),
-	('/admin/auth', auth.admin),
+	('/admin/auth', atuin.auth.admin),
 	
 	('/', js_translations.views),
 ]
+
