@@ -17,7 +17,7 @@
 	
 		<div class="row" style="margin-bottom: 10px">
 			<div class="col-md-6">
-				<button class="btn btn-small btn-default newUserBtn" data-url="{{ url_for('atuin.auth.admin.users_save') }}"><i class="icon-plus-sign"> </i> New User</button>
+				<button class="btn btn-small btn-default newUserBtn" data-url="{{ lurl_for('atuin.auth.admin.users_save') }}"><i class="icon-plus-sign"> </i> New User</button>
 			</div>
 			<div class="col-md-6 text-right">
 				<div class="input-group">
@@ -34,8 +34,8 @@
 				{% for user in users %}
 					<tr class="userRow">
 						<td>
-							<a href="{{ url_for('atuin.auth.admin.users_get', userid=user.id) }}"
-							   data-url="{{ url_for('atuin.auth.admin.users_save', userid=user.id) }}"
+							<a href="{{ lurl_for('atuin.auth.admin.users_get', userid=user.id) }}"
+							   data-url="{{ lurl_for('atuin.auth.admin.users_save', userid=user.id) }}"
 							   class="modUser searchable">{{ user.name }} {{ user.username }}</a>
 						</td>
 						<td>
@@ -51,7 +51,7 @@
 							<small>Last seen: {{ user.last_login.strftime('%d/%m/%Y alle %H:%M') if user.last_login else 'never' }}</small>
 						</td>
 						<td>
-							<button class="btn btn-danger btn-sm deleteUser" data-url="{{ url_for('atuin.auth.admin.users_delete', userid=user.id) }}">Delete</button>
+							<button class="btn btn-danger btn-sm deleteUser" data-url="{{ lurl_for('atuin.auth.admin.users_delete', userid=user.id) }}">Delete</button>
 						</td>
 					</tr>
 				{% endfor %}
