@@ -12,7 +12,7 @@ from forms import UserFormAdmin
 bp = Blueprint('atuin.auth.admin', __name__)
 
 @bp.route("/users")
-@login_role_required("ADMIN")
+# @login_role_required("ADMIN")
 def users_index():
 	users = User.query().order(User.name).fetch(100)
 	usform = UserFormAdmin()

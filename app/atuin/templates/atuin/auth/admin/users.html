@@ -34,24 +34,17 @@
 				{% for user in users %}
 					<tr class="userRow">
 						<td>
-							<a href="{{ lurl_for('atuin.auth.admin.users_get', userid=user.id) }}"
-							   data-url="{{ lurl_for('atuin.auth.admin.users_save', userid=user.id) }}"
+							<a href="{{ lurl_for('atuin.auth.admin.users_get', userkey=user.get_urlsafe()) }}"
+							   data-url="{{ lurl_for('atuin.auth.admin.users_save', userid=user.get_urlsafe()) }}"
 							   class="modUser searchable">{{ user.name }} {{ user.username }}</a>
 						</td>
 						<td>
-							{{ user.usertype_translated() }}
-							{% if (user.usertype == 'customer') and (user.active_until) %}
-								<br>
-								<small>{{ _('Expires:') }} {{ user.active_until.strftime('%d/%m/%Y') }}</small>
-							{% endif %}
-						</td>
-						<td>
-							{{ user.role_translated() }}
+							{{ user.role_title }}
 							<br>
-							<small>{{ _('Last seen:') }} {{ user.last_login.strftime('%d/%m/%Y alle %H:%M') if user.last_login else 'never' }}</small>
+							<small>{{ _('Last seen:') }} {{ user.last_login.strftime('%d/%m/%Y at %H:%M') if user.last_login else _('never') }}</small>
 						</td>
 						<td>
-							<button class="btn btn-danger btn-sm deleteUser" data-url="{{ lurl_for('atuin.auth.admin.users_delete', userid=user.id) }}">{{ _('Delete') }}</button>
+							<button class="btn btn-danger btn-sm deleteUser" data-url="{{ lurl_for('atuin.auth.admin.users_delete', userkey=user.get_urlsafe()) }}">{{ _('Delete') }}</button>
 						</td>
 					</tr>
 				{% endfor %}
