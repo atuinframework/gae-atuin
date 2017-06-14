@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """`appengine_config` gets loaded when starting a new application instance."""
+import os
 import vendor
 # insert `lib` as a site directory so our `main` module can load
 # third-party libraries, and override built-ins with newer
@@ -21,3 +22,9 @@ def gae_mini_profiler_should_profile_production():
 def gae_mini_profiler_should_profile_development():
 	pass
 	# return True
+
+# authentication fix for appcfg download_data and upload_data	
+if os.environ.get('SERVER_SOFTWARE','').startswith('Development'):
+	remoteapi_CUSTOM_ENVIRONMENT_AUTHENTICATION = (
+	'REMOTE_ADDR', ['127.0.0.1'])
+
