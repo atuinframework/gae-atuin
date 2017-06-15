@@ -10,11 +10,9 @@ import admin.admin
 
 mounts = [
 	('/', home.views),
-	
-	('/auth', auth.views),
-	
-	('/admin', admin.admin),
-	('/admin/auth', auth.admin),
-	
-	('/', js_translations.views),
+
+	# ATUIN
+	('/', atuin.auth.views),
+	('/admin/auth', atuin.auth.admin),
+	('/', atuin.js_translations.views),
 ]
