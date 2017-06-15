@@ -4,7 +4,7 @@ lang_title_l = [
 	('it', 'Italiano'),
 	('en', 'English'),
 	('de', 'Deustch'),
-	('fr', 'Francois'),
+	('fr', 'Francais'),
 	('es', 'Espanol'),
 ]
 
