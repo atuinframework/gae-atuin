@@ -1,11 +1,25 @@
 # -*- coding: utf-8 -*-
-# Settings file
-# Why this file works like this?
-# When updating the application, it should ensure the application will run without updating config.py
-# each new features should have a default here
+"""
+Settings file
+Why this file works like this?
+When updating the application, it should ensure the application will run without updating config.py
+each new features should have a default here
+"""
+import sys
 
 # basic configuration - these MUST BE present
-import config
+try:
+	import config
+except ImportError:
+	err_msg = [	"*" * 80,
+				"\nATUIN ERROR\n\nConfiguration files are missing. Please copy config.py out of atuin/ directory.",
+				"\nMore info in the README file and documentation",
+				"\n",
+				"*" * 80
+	]
+	print "\n".join(err_msg)
+	sys.exit(255)
+
 
 DEBUG = config.DEBUG
 SECRET_KEY = config.SECRET_KEY
