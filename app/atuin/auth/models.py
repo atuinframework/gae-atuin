@@ -10,7 +10,7 @@ from atuin.mailing import send_mail
 
 from google.appengine.ext import ndb, blobstore
 from google.appengine.api import images as gapi_images
-from utils import update_searchable_set
+from atuin.utils import update_searchable_set
 from permission_policies import user_role_polices, role_policy_functions
 
 
