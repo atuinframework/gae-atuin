@@ -10,10 +10,10 @@
 				{{ _('ATUIN Flask Web Framework') }}
 			</div>
 			<div class="panel-body">
-				{% include 'atuin/auth/loginform.html' %}
+				Customize this home page!
 			</div>
 			<div class="panel-footer">
-				<button class="btn btn-block btn-primary btnLogin" autocomplete="off">{{ _('Login') }}</button>
+				<a class="btn btn-block btn-primary" href="{{ url_for('atuin.auth.login') }}">{{ _('Login') }}</a>
 			</div>
 		</div>
 	</div>
