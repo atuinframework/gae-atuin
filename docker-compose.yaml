@@ -1,7 +1,7 @@
 version: '2'
 services:
   devenv:
-    image: nyxgear/gae-atuin-devenv
+    image: atuinframework/gae-atuin-devenv
     ports:
      - "8080:8080"   # default module port
      - "8000:8000"   # admin server port
