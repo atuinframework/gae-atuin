@@ -17,8 +17,8 @@ services:
         --admin_host=0.0.0.0 \
         --storage_path=/data-volume \
       app.yaml"
-  tools:
-    image: scalebox/atuin-gulp:v2
+  atuin-gulp:
+    image: atuinframework/atuin-gulp:v2
     volumes:
       - ./app:/workspace/app
       - ./config:/workspace/config

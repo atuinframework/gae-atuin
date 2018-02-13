@@ -1,0 +1,10 @@
+*.py[cod]
+*~
+app/lib*
+*app/config.py
+app/static/min*
+
+Thumbs.db
+.DS_Store
+
+# Project specific

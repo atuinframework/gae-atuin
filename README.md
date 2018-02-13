@@ -1,6 +1,8 @@
-# GAE Atuin v2 - A Flask web application skeleton.
 
-This is the Google AppEngine version of [Atuin], a [Scalebox]'s Flask web application skeleton.
+# GAE Atuin Web Framework - A Flask web application skeleton.
+
+This is the Google AppEngine version of [Atuin Web Framework], a [Scalebox]'s 
+Flask web application skeleton.
 
 
 ### Features included
@@ -8,72 +10,54 @@ This is the Google AppEngine version of [Atuin], a [Scalebox]'s Flask web applic
  - The good famous Flask web framework
  - Babel
  - Google Auth support and decorators
- - js concatenation and minify (+ obfuscation)
+ - js concatenation and minification (+ obfuscation)
  - SASS preprocessor
  - Image optimization
- - External libraries inclusion
- - Almost Everything managed by Gulp
+ - Automatic dependencies management
 
  
-## Development environment
+### Requirements
 
-#### What's required to execute it?
+- `docker`
+- `docker-compose`
 
-Just `docker-compose`.
 
-To run local development environment:
+### Initial setup
+
+The firs time you run the GAE Atuin framework it is necessary to
+install the python dependencies of the project:
+
+1. Connect to the atuin-gulp container
+```bash
+docker-compose run --rm atuin-gulp sh
+```
+2. Run the Gulp task to update/install dependencies
+```bash
+gulp update
+```
+
+Each time you change the the project dependencies update them with this command.
+
+
+### How to run the project
 
 ```bash
 docker-compose up
 ```
 
 
-#### Docker containers
+### Language translations
 
-- **devenv** - Google CLoud SDK.
-    
-    - Run the local development server of GAE SDK 
+[Flask-Babel] is fully supported.
 
-- **tools** - Node.js & gulp tasks
-    
-    - To manage project's dependencies.
-    - To handle project's static files (concatenate, minify and uglify).
-    - To handle project's translations.
-    - To prepare static files for deployment.
+#### Translations management
 
-
-## Handle dependencies
-
-When you run for the first time the GAE Atuin framework environment you have to install the python dependencies.
-To do this, as the tasks to manage translations, you have to connect to the `atuin-tools` container.
-
-1. With the development environment running, connect to the tools container.
+1. Connect to the atuin-gulp container
 ```bash
-docker exec -it tools sh
+docker-compose run --rm atuin-gulp sh
 ```
-2. Then, use pip through the dedicated Gulp task to update them.
-```bash
-# To get the Gulp help
-gulp
-
-# Update dependecies
-gulp update
-```
-
-Each time you change the `requirements.txt` file don't forget to run this update task.
-
-
-## Translations
-
-Flask-Babel is fully supported. [Official documentation]
-
-#### To manage project translations:
-
-1. With the development environment running, connect to the tools container.
-```bash
-docker-compose exec tools sh
-```
-2. Many gulp tasks are available to extract, initialize, update and compile the project translated word.
+2. Many gulp tasks are available to extract, initialize, update and compile the 
+project translations.
 
 ```bash
 # To get the Gulp help
@@ -84,45 +68,57 @@ gulp translations[:extract|:update|:compile|:init]
 ```
 
 
-## Deploy
+### Deployment
 
-### Before the deploy... don't forget to:
+Quick reminder before to do the deployment:
 
 1. Check `app/config.py`
 2. Check `app/version.py`
 3. Check `app/app.yaml`
-4. (Translation? Up to date?)
-5. Minify, uglify and compress (production mode) the project's static files:
+4. [Update translations]
+5. Optimize the project's static files for production:
 
 ```bash
-docker-compose run tools gulp prepare-deploy
+docker-compose run --rm atuin-gulp gulp prepare-deploy
 ```
 
-### Deploy
+#### Deploy over GAE through the devenv container
 
-[TODO docs]
-
-1. To do the deploy use the `devenv` container.
+1. Connect to the devenv container
 ```bash
-$ docker-compose run devenv bash
+docker-compose run --rm devenv sh
 ```
 
-2. Authenticate with your account.
+2. Do the login
 ```bash
-# gcloud auth login 'ACCOUNT'
+gcloud auth login <gcloud account email>
 ```
 
-3. Deploy the project.
+3. Deploy
 ```bash
-# gcloud app deploy --project=<project-id> workspace/app/app.yaml
+gcloud app deploy --project=<project-id> /workspace/app/app.yaml
 ```
 
 
-## Code conventions
+### Code conventions
  - `Admin` `_admin` at the end of name for admin variables
  - `.btnSave` `.btnNewWhatNew` `.normalContentCSSClass`
- - `form_nameofcontent.html` `modal_nameofcontent.html` the content type of the file is a prefix
+ - `form_nameofcontent.html` `modal_nameofcontent.html` the content type of the
+ file is a prefix
 
-[Atuin]: https://bitbucket.org/account/user/scalebox/projects/ATUIN
+### More on the docker containers
+
+- **devenv** the [GAE Atuin development environment]
+- **atuin-gulp** the [CASE] tool [Atuin Gulp]
+
+    - To manage project's dependencies.
+    - To handle project's static files (concatenate, minify and uglify).
+    - To handle project's translations.
+    - To prepare static files for deployment.
+
+[Atuin Web Framework]: https://github.com/atuinframework
 [Scalebox]: http://www.scalebox.it/
-[Official documentation]: http://pythonhosted.org/Flask-Babel/
+[Flask-Babel]: http://pythonhosted.org/Flask-Babel/
+[GAE Atuin development environment]: https://github.com/atuinframework/gae-atuin-devenv
+[CASE]: https://en.wikipedia.org/wiki/Computer-aided_software_engineering
+[Atuin Gulp]: https://github.com/atuinframework/atuin-gulp
