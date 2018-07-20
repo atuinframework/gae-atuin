@@ -1,0 +1,17 @@
+FROM alpine:3.7
+MAINTAINER nyxgear <dev@nyxgear.com>
+
+RUN apk add --update --no-cache python3 && \
+    find / -type d -name __pycache__ -exec rm -r {} +   && \
+    rm -r /usr/lib/python*/ensurepip                    && \
+    rm -r /usr/lib/python*/lib2to3                      && \
+    rm -r /usr/lib/python*/turtledemo                   && \
+    rm /usr/lib/python*/turtle.py                       && \
+    rm -rf /root/.cache /var/cache /usr/share/terminfo
+
+RUN pip3 install --no-cache-dir -U pip sphinx sphinx-autobuild
+
+RUN mkdir /workspace
+WORKDIR /workspace
+
+CMD sphinx-autobuild -H 0.0.0.0 -p 9999 docs docs/_build/html
